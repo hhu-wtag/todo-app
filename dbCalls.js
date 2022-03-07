@@ -26,3 +26,12 @@ export async function insertDataToDB(state) {
     error,
   }
 }
+
+export async function deleteDataByID(id) {
+  const { data, error } = await supabase.from("Todo").delete().match({ id })
+
+  return {
+    data,
+    error,
+  }
+}

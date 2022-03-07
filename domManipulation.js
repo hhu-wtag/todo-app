@@ -1,6 +1,7 @@
-import { insertDataToDB } from "./dbCalls.js"
+import { deleteDataByID, insertDataToDB } from "./dbCalls.js"
 import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 import { doneIcon, editIcon, deleteIcon } from "./Helpers/icons.js"
+import { renderUI } from "./render.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -30,14 +31,18 @@ export function createCard({ itemId, title, createdAt }) {
   const doneBtn = document.createElement("span")
   doneBtn.innerHTML = doneIcon()
   doneBtn.classList.add("btn", "doneBtn")
+  doneBtn.setAttribute("data-id", itemId)
 
   const editBtn = document.createElement("span")
   editBtn.innerHTML = editIcon()
   editBtn.classList.add("btn", "editBtn")
+  editBtn.setAttribute("data-id", itemId)
 
   const deleteBtn = document.createElement("span")
   deleteBtn.innerHTML = deleteIcon()
   deleteBtn.classList.add("btn", "deleteBtn")
+  deleteBtn.setAttribute("data-id", itemId)
+  deleteBtn.addEventListener("click", handleDelete)
 
   cardFooter.appendChild(doneBtn)
   cardFooter.appendChild(editBtn)
@@ -115,10 +120,18 @@ async function handleIntialAddTask(event) {
   cardsDOM.removeChild(cardsDOM.firstElementChild)
 
   cardsDOM.prepend(card)
+
+  renderUI()
 }
 
 function handleIntialDeleteTask(event) {
   console.log("Initial Delete Task Button Pressed !")
+
+  cardsDOM.removeChild(cardsDOM.firstElementChild)
+
+  updateGlobalState({
+    createCardIsOpened: false,
+  })
 }
 
 function handleInputField(e) {
@@ -127,4 +140,16 @@ function handleInputField(e) {
   updateGlobalState({
     title: value,
   })
+}
+
+async function handleDelete() {
+  let dataID = this.getAttribute("data-id")
+
+  let { error, data } = await deleteDataByID(dataID)
+
+  if (error) {
+    throw new Error("Error Occured when deleting from DB")
+  }
+
+  renderUI()
 }

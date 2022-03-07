@@ -1,3 +1,13 @@
 body {
   padding: 0;
 }
+
+.card {
+  border: red dotted 2px;
+}
+
+#cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}

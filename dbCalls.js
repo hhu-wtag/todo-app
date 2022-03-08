@@ -35,3 +35,15 @@ export async function deleteDataByID(id) {
     error,
   }
 }
+
+export async function updateDataByID(id, state) {
+  const { data, error } = await supabase
+    .from("Todo")
+    .update({ title: state })
+    .match({ id })
+
+  return {
+    data,
+    error,
+  }
+}

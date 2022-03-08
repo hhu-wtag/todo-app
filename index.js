@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     updateGlobalState({
       createCardIsOpened: false,
       title: "",
+      contentEditable: false,
     })
 
     renderUI()

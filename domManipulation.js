@@ -1,4 +1,4 @@
-import { deleteDataByID, insertDataToDB } from "./dbCalls.js"
+import { deleteDataByID, insertDataToDB, updateDataByID } from "./dbCalls.js"
 import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 import { doneIcon, editIcon, deleteIcon } from "./Helpers/icons.js"
 import { renderUI } from "./render.js"
@@ -22,6 +22,7 @@ export function createCard({ itemId, title, createdAt }) {
   pTitle.id = "title"
   pTitle.classList.add("cardTitle")
   pTitle.innerHTML = title
+  pTitle.setAttribute("contenteditable", false)
 
   const pCreatedAt = document.createElement("p")
   pCreatedAt.id = "createdAt"
@@ -37,6 +38,7 @@ export function createCard({ itemId, title, createdAt }) {
   editBtn.innerHTML = editIcon()
   editBtn.classList.add("btn", "editBtn")
   editBtn.setAttribute("data-id", itemId)
+  editBtn.addEventListener("click", handleEdit)
 
   const deleteBtn = document.createElement("span")
   deleteBtn.innerHTML = deleteIcon()
@@ -152,4 +154,120 @@ async function handleDelete() {
   }
 
   renderUI()
+}
+
+async function handleSaveMiddleware(dataID) {
+  const pTitle = document.querySelector(
+    `div[data-id='${dataID}'] > p.cardTitle`
+  )
+
+  const newText = pTitle.textContent
+
+  // update localStorage
+
+  //TODO handle empty string of newText
+
+  //Make DB Calls
+
+  const { data, error } = await updateDataByID(dataID, newText)
+
+  //if (error) throw new Error("Error while updating DB")
+
+  return new Promise(
+    (resolve) => {
+      resolve(data)
+    },
+    (reject) => reject(error)
+  )
+}
+
+async function handleSave() {
+  let dataID = this.getAttribute("data-id")
+
+  const pTitle = document.querySelector(
+    `div[data-id='${dataID}'] > p.cardTitle`
+  )
+
+  //update data in db
+  let response = await handleSaveMiddleware(dataID)
+
+  if (response) {
+    let state = pTitle.getAttribute("contenteditable")
+
+    state = state === "true" ? "false" : "true"
+
+    toogleContentEditable(pTitle, state, dataID)
+  }
+}
+
+async function handleEdit() {
+  let dataID = this.getAttribute("data-id")
+
+  const pTitle = document.querySelector(
+    `div[data-id='${dataID}'] > p.cardTitle`
+  )
+
+  const oldText = pTitle.textContent
+
+  let state =
+    pTitle.getAttribute("contenteditable") === "true" ? "false" : "true"
+
+  toogleContentEditable(pTitle, state, dataID)
+}
+
+function toogleContentEditable(el, contentEditableIsOn, dataID) {
+  var sel = window.getSelection()
+
+  if (contentEditableIsOn === "true") {
+    el.setAttribute("contenteditable", "true")
+    const range = document.createRange()
+
+    range.setStart(el.childNodes[0], el.childNodes[0].length)
+
+    sel.removeAllRanges()
+    sel.addRange(range)
+  } else {
+    el.setAttribute("contenteditable", "false")
+    sel.removeAllRanges()
+  }
+
+  toogleEditModeUI(dataID)
+}
+
+function toogleEditModeUI(dataID) {
+  const pTitle = document.querySelector(
+    `div[data-id='${dataID}'] > p.cardTitle`
+  )
+
+  const divCardHeader = document.querySelector(
+    `div[data-id='${dataID}'] > div.cardHeader`
+  )
+
+  const divCardFooter = document.querySelector(
+    `div[data-id='${dataID}'] > div.cardFooter`
+  )
+
+  const state = pTitle.getAttribute("contenteditable")
+
+  const pCreatedAt = divCardHeader.querySelector("#createdAt")
+
+  const btnEdit = divCardFooter.querySelector(".editBtn")
+
+  if (state === "true") {
+    pCreatedAt.setAttribute("hidden", true) // hide createdAt element
+
+    btnEdit.setAttribute("hidden", true) // hide edit button
+
+    const btnSave = document.createElement("button")
+    btnSave.textContent = "save"
+    btnSave.addEventListener("click", handleSave)
+    btnSave.setAttribute("data-id", dataID)
+
+    divCardFooter.prepend(btnSave)
+  } else {
+    pCreatedAt.removeAttribute("hidden")
+    btnEdit.removeAttribute("hidden")
+
+    divCardFooter.removeChild(divCardFooter.firstElementChild)
+  }
 }

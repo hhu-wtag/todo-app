@@ -47,3 +47,15 @@ export async function updateDataByID(id, state) {
     error,
   }
 }
+
+export async function updateDone(id, doneIn) {
+  const { data, error } = await supabase
+    .from("Todo")
+    .update({ done: true, doneIn })
+    .match({ id })
+
+  return {
+    data,
+    error,
+  }
+}

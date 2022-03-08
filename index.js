@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       createCardIsOpened: false,
       title: "",
       contentEditable: false,
+      editModeOn: false,
     })
 
     renderUI()

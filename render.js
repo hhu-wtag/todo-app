@@ -26,6 +26,8 @@ export async function renderUI() {
       itemId: item.id,
       title: item.title,
       createdAt: item.created_at,
+      done: item.done,
+      doneIn: item.doneIn,
     })
 
     cardsDOM.append(card)

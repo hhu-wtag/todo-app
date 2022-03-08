@@ -48,8 +48,6 @@ export async function handleIntialAddTask(event) {
   updateGlobalState({
     createCardIsOpened: false,
   })
-
-  renderUI()
 }
 
 export function handleIntialDeleteTask(event) {
@@ -68,6 +66,20 @@ export function handleInputField(e) {
   updateGlobalState({
     title: value,
   })
+}
+
+export async function handleDelete() {
+  let dataID = this.getAttribute("data-id")
+
+  let { error, data } = await deleteDataByID(dataID)
+
+  if (error) {
+    throw new Error("Error Occured when deleting from DB")
+  }
+
+  let domToBeDeleted = cardsDOM.querySelector(`div[data-id='${dataID}']`)
+
+  cardsDOM.removeChild(domToBeDeleted)
 }
 
 export async function handleDone() {
@@ -124,18 +136,6 @@ export async function handleDone() {
   } else {
     pCompletedTag.textContent = `Completed in ${days} days`
   }
-}
-
-export async function handleDelete() {
-  let dataID = this.getAttribute("data-id")
-
-  let { error, data } = await deleteDataByID(dataID)
-
-  if (error) {
-    throw new Error("Error Occured when deleting from DB")
-  }
-
-  renderUI()
 }
 
 async function handleSaveMiddleware(dataID) {

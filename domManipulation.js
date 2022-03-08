@@ -28,13 +28,13 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   const pTitle = document.createElement("p")
   pTitle.id = "title"
   pTitle.classList.add("cardTitle")
-  pTitle.innerHTML = title
+  pTitle.textContent = title
   pTitle.setAttribute("contenteditable", false)
 
   const pCreatedAt = document.createElement("p")
   pCreatedAt.id = "createdAt"
   pCreatedAt.classList.add("cardCreatedAt")
-  pCreatedAt.innerHTML = `Created At: ${convertTime(String(createdAt))}`
+  pCreatedAt.textContent = `Created At: ${convertTime(String(createdAt))}`
 
   const doneBtn = document.createElement("span")
   doneBtn.innerHTML = doneIcon()

@@ -6,9 +6,9 @@ import {
   updateDataByID,
 } from "./dbCalls.js"
 
-import { completedInDays, convertTime } from "./Helpers/time.js"
+import sanitizer from "./Helpers/santizer.js"
 
-import { renderUI } from "./render.js"
+import { completedInDays } from "./Helpers/time.js"
 
 import { createCard } from "./domManipulation.js"
 
@@ -19,11 +19,17 @@ export async function handleIntialAddTask(event) {
 
   let { title } = getGlobalState()
 
-  if (title === "") return
+  //sanitize title
+
+  let sanitizedTitle = sanitizer(title)
+
+  if (sanitizedTitle === "") return
+
+  console.log(sanitizedTitle)
 
   //add state to db
   let { error, data } = await insertDataToDB({
-    title,
+    title: sanitizedTitle,
   })
 
   if (error) {
@@ -57,6 +63,7 @@ export function handleIntialDeleteTask(event) {
 
   updateGlobalState({
     createCardIsOpened: false,
+    title: "",
   })
 }
 
@@ -119,7 +126,7 @@ export async function handleDone() {
   const btnEdit = divCardFooterLeft.querySelector(".editBtn")
 
   //hide save button
-  btnSave.setAttribute("hidden", true)
+  if (btnSave) btnSave.setAttribute("hidden", true)
 
   //hide done button
   btnDone.setAttribute("hidden", "true")
@@ -145,15 +152,22 @@ async function handleSaveMiddleware(dataID) {
 
   const newText = pTitle.textContent
 
+  console.log(newText)
+
+  const sanitizedTitle = sanitizer(newText)
+
+  console.log(sanitizedTitle)
   // update localStorage
 
   //TODO handle empty string of newText
 
   //Make DB Calls
 
-  const { data, error } = await updateDataByID(dataID, newText)
+  const { data, error } = await updateDataByID(dataID, sanitizedTitle)
 
   //if (error) throw new Error("Error while updating DB")
+
+  console.log(data)
 
   return new Promise(
     (resolve) => {
@@ -176,6 +190,7 @@ export async function handleSave() {
   if (response) {
     let state = pTitle.getAttribute("contenteditable")
 
+    pTitle.textContent = response[0].title
     state = state === "true" ? "false" : "true"
 
     toogleContentEditable(pTitle, state, dataID)
@@ -192,8 +207,6 @@ export async function handleEdit() {
   const pTitle = document.querySelector(
     `div[data-id='${dataID}'] > p.cardTitle`
   )
-
-  const oldText = pTitle.textContent
 
   let state =
     pTitle.getAttribute("contenteditable") === "true" ? "false" : "true"

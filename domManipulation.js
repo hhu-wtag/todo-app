@@ -1,6 +1,7 @@
 import { deleteDataByID, insertDataToDB, updateDataByID } from "./dbCalls.js"
 import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 import { doneIcon, editIcon, deleteIcon } from "./Helpers/icons.js"
+import time from "./Helpers/time.js"
 import { renderUI } from "./render.js"
 
 const cardsDOM = document.querySelector("#cards")
@@ -27,7 +28,7 @@ export function createCard({ itemId, title, createdAt }) {
   const pCreatedAt = document.createElement("p")
   pCreatedAt.id = "createdAt"
   pCreatedAt.classList.add("cardCreatedAt")
-  pCreatedAt.innerHTML = createdAt
+  pCreatedAt.innerHTML = `Created At: ${time(String(createdAt))}`
 
   const doneBtn = document.createElement("span")
   doneBtn.innerHTML = doneIcon()
@@ -114,7 +115,7 @@ async function handleIntialAddTask(event) {
   let card = createCard({
     itemId: id,
     title: titleFromDB,
-    created_at,
+    createdAt: created_at,
   })
 
   //remove the intialCard that was added for data adding purpose
@@ -122,6 +123,10 @@ async function handleIntialAddTask(event) {
   cardsDOM.removeChild(cardsDOM.firstElementChild)
 
   cardsDOM.prepend(card)
+
+  updateGlobalState({
+    createCardIsOpened: false,
+  })
 
   renderUI()
 }

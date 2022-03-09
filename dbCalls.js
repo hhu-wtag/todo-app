@@ -59,3 +59,12 @@ export async function updateDone(id, doneIn) {
     error,
   }
 }
+
+export async function searchDB(searchText) {
+  const { data, error } = await supabase
+    .from("Todo")
+    .select()
+    .ilike("title", `%${searchText}%`)
+
+  return { data, error }
+}

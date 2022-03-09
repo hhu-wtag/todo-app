@@ -3,6 +3,22 @@ import { createCard } from "./domManipulation.js"
 
 const cardsDOM = document.querySelector("#cards")
 
+function displayCards(data) {
+  let card = null
+
+  data.forEach((item) => {
+    card = createCard({
+      itemId: item.id,
+      title: item.title,
+      createdAt: item.created_at,
+      done: item.done,
+      doneIn: item.doneIn,
+    })
+
+    cardsDOM.append(card)
+  })
+}
+
 export async function renderUI() {
   //remove everything from the list
   while (cardsDOM.firstChild) {
@@ -21,15 +37,14 @@ export async function renderUI() {
 
   let card = null
 
-  data.forEach((item) => {
-    card = createCard({
-      itemId: item.id,
-      title: item.title,
-      createdAt: item.created_at,
-      done: item.done,
-      doneIn: item.doneIn,
-    })
+  displayCards(data)
+}
 
-    cardsDOM.append(card)
-  })
+export async function renderUIOnSearch(data) {
+  //remove everything from the list
+  while (cardsDOM.firstChild) {
+    cardsDOM.removeChild(cardsDOM.firstChild)
+  }
+
+  displayCards(data)
 }

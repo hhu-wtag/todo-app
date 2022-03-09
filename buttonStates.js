@@ -1,29 +1,19 @@
-export function disableFilterButtons(
-  all = false,
-  inc = false,
-  com = false,
-  create = false
-) {
+export function disableFilterButtons() {
   const btnFilterAll = document.querySelector(".btnFilterAll")
   const btnFilterInc = document.querySelector(".btnFilterInc")
   const btnFilterCom = document.querySelector(".btnFilterCom")
   const btnCreate = document.querySelector("#createBtn")
+  const btnLoadMore = document.querySelector(".btnLoadMore")
 
-  if (create) {
-    btnCreate.setAttribute("disabled", true)
-  }
+  btnCreate.setAttribute("disabled", true)
 
-  if (all) {
-    btnFilterAll.setAttribute("disabled", true)
-  }
+  btnFilterAll.setAttribute("disabled", true)
 
-  if (inc) {
-    btnFilterInc.setAttribute("disabled", true)
-  }
+  btnFilterInc.setAttribute("disabled", true)
 
-  if (com) {
-    btnFilterCom.setAttribute("disabled", true)
-  }
+  btnFilterCom.setAttribute("disabled", true)
+
+  btnLoadMore.setAttribute("disabled", true)
 }
 
 export function enableFilterButtons() {
@@ -31,6 +21,7 @@ export function enableFilterButtons() {
   const btnFilterInc = document.querySelector(".btnFilterInc")
   const btnFilterCom = document.querySelector(".btnFilterCom")
   const btnCreate = document.querySelector("#createBtn")
+  const btnLoadMore = document.querySelector(".btnLoadMore")
 
   btnCreate.removeAttribute("disabled")
 
@@ -39,4 +30,19 @@ export function enableFilterButtons() {
   btnFilterInc.removeAttribute("disabled")
 
   btnFilterCom.removeAttribute("disabled")
+  btnLoadMore.removeAttribute("disabled")
+}
+
+export function showLoadMoreBtn() {
+  const btnLoadMore = document.querySelector(".btnLoadMore")
+
+  if (btnLoadMore.getAttribute("hidden")) {
+    btnLoadMore.removeAttribute("hidden")
+  }
+}
+
+export function hideLoadMoreBtn() {
+  const btnLoadMore = document.querySelector(".btnLoadMore")
+
+  btnLoadMore.setAttribute("hidden", true)
 }

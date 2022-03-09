@@ -1,7 +1,12 @@
-import { disableFilterButtons, enableFilterButtons } from "./buttonStates.js"
+import {
+  disableFilterButtons,
+  enableFilterButtons,
+  hideLoadMoreBtn,
+} from "./buttonStates.js"
 import {
   getAllDataFromDB,
   getAllFilterdData,
+  getDataOnLoadMore,
   getFilterdData,
 } from "./dbCalls.js"
 import { createCard } from "./domManipulation.js"
@@ -26,7 +31,7 @@ function displayCards(data) {
 }
 
 export async function renderUI() {
-  disableFilterButtons(true, true, true, true) // disable all three filter buttons
+  disableFilterButtons() // disable all three filter buttons
 
   //remove everything from the list
   while (cardsDOM.firstChild) {
@@ -43,15 +48,13 @@ export async function renderUI() {
 
   console.log(data)
 
-  let card = null
-
   displayCards(data)
 
   enableFilterButtons()
 }
 
 export async function renderUIOnSearch(data) {
-  disableFilterButtons(true, true, true, true)
+  disableFilterButtons()
   //remove everything from the list
   while (cardsDOM.firstChild) {
     cardsDOM.removeChild(cardsDOM.firstChild)
@@ -61,8 +64,47 @@ export async function renderUIOnSearch(data) {
   enableFilterButtons()
 }
 
+export async function renderUIOnLoadMore() {
+  let { searchText, limit } = getGlobalState()
+
+  let { data, error } = await getDataOnLoadMore(searchText)
+
+  let range
+
+  if (data.length >= limit) {
+    range = limit
+  } else {
+    range = data.length
+
+    //all the data has been fetched
+    //hide the load more button
+
+    hideLoadMoreBtn()
+  }
+
+  let card = null
+
+  while (cardsDOM.firstChild) {
+    cardsDOM.removeChild(cardsDOM.firstChild)
+  }
+
+  for (let index = 0; index < range; index++) {
+    let item = data[index]
+
+    card = createCard({
+      itemId: item.id,
+      title: item.title,
+      createdAt: item.created_at,
+      done: item.done,
+      doneIn: item.doneIn,
+    })
+
+    cardsDOM.append(card)
+  }
+}
+
 export async function renderUIOnFilter(mode) {
-  disableFilterButtons(true, true, true, true)
+  disableFilterButtons()
   //remove everything from the list
   while (cardsDOM.firstChild) {
     cardsDOM.removeChild(cardsDOM.firstChild)

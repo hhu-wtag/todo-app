@@ -1,7 +1,7 @@
 import { createInitialCard } from "./domManipulation.js"
 import { handleFilterAll, handleFilterCom, handleFilterInc } from "./filter.js"
 import { updateGlobalState, getGlobalState } from "./Helpers/globalState.js"
-import { renderUI } from "./render.js"
+import { renderUI, renderUIOnLoadMore } from "./render.js"
 
 import { toogleSearchBar, handleSearch } from "./search.js"
 
@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const btnFilterInc = document.querySelector(".btnFilterInc")
   const btnFilterCom = document.querySelector(".btnFilterCom")
 
+  const btnLoadMore = document.querySelector(".btnLoadMore")
+
   ;(function mounted() {
     updateGlobalState({
       createCardIsOpened: false,
@@ -23,6 +25,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       contentEditable: false,
       editModeOn: false,
       fetchingData: false,
+      limit: 10,
     })
 
     renderUI()
@@ -35,6 +38,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
   btnFilterAll.addEventListener("click", handleFilterAll)
   btnFilterInc.addEventListener("click", handleFilterInc)
   btnFilterCom.addEventListener("click", handleFilterCom)
+
+  btnLoadMore.addEventListener("click", function () {
+    let { limit } = getGlobalState()
+
+    updateGlobalState({
+      limit: limit + 10,
+    })
+
+    renderUIOnLoadMore()
+  })
 
   createBtnDOM.addEventListener("click", (e) => {
     let { createCardIsOpened } = getGlobalState()

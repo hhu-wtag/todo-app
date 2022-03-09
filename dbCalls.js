@@ -1,9 +1,26 @@
+import { getGlobalState } from "./Helpers/globalState.js"
 import supabase from "./supabase.js"
 
 export async function getAllDataFromDB() {
+  let { limit } = getGlobalState()
+
   const { data, error } = await supabase
     .from("Todo")
     .select()
+    .order("created_at", { ascending: false })
+    .limit(limit)
+
+  return {
+    data,
+    error,
+  }
+}
+
+export async function getDataOnLoadMore(searchText) {
+  const { data, error } = await supabase
+    .from("Todo")
+    .select()
+    .ilike("title", `%${searchText}%`)
     .order("created_at", { ascending: false })
 
   return {

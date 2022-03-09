@@ -8,7 +8,7 @@ export function handleFilterAll() {
     createCardIsOpened: false,
   })
 
-  renderUI()
+  renderUIOnFilter("all")
 }
 
 export function handleFilterInc() {

@@ -12,11 +12,25 @@ export async function getAllDataFromDB() {
   }
 }
 
-export async function getFilterdData(done) {
+export async function getFilterdData(done, searchText) {
   const { data, error } = await supabase
     .from("Todo")
     .select()
     .match({ done })
+    .ilike("title", `%${searchText}%`)
+    .order("created_at", { ascending: false })
+
+  return {
+    data,
+    error,
+  }
+}
+
+export async function getAllFilterdData(searchText) {
+  const { data, error } = await supabase
+    .from("Todo")
+    .select()
+    .ilike("title", `%${searchText}%`)
     .order("created_at", { ascending: false })
 
   return {

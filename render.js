@@ -1,7 +1,11 @@
 import { disableFilterButtons, enableFilterButtons } from "./buttonStates.js"
-import { getAllDataFromDB, getFilterdData } from "./dbCalls.js"
+import {
+  getAllDataFromDB,
+  getAllFilterdData,
+  getFilterdData,
+} from "./dbCalls.js"
 import { createCard } from "./domManipulation.js"
-import { updateGlobalState } from "./Helpers/globalState.js"
+import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -66,17 +70,26 @@ export async function renderUIOnFilter(mode) {
 
   let data = null
 
+  let { searchText } = getGlobalState()
+
   if (mode === "inc") {
     //show only the incomplete data
 
-    let response = await getFilterdData(false)
+    let response = await getFilterdData(false, searchText)
+
+    if (response.error)
+      throw new Error("Error while fetching incomplete filtered data")
+
+    data = response.data
+  } else if (mode === "all") {
+    let response = await getAllFilterdData(searchText)
 
     if (response.error)
       throw new Error("Error while fetching incomplete filtered data")
 
     data = response.data
   } else {
-    let response = await getFilterdData(true)
+    let response = await getFilterdData(true, searchText)
 
     if (response.error)
       throw new Error("Error while fetching complete filtered data")

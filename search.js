@@ -1,4 +1,5 @@
 import { searchDB } from "./dbCalls.js"
+import { updateGlobalState } from "./Helpers/globalState.js"
 import { renderUI, renderUIOnSearch } from "./render.js"
 
 export function toogleSearchBar(inputSearchBar) {
@@ -30,6 +31,10 @@ function debounce(func, delay = 250) {
 
 async function getSearchData() {
   let searchText = this.value
+
+  updateGlobalState({
+    searchText,
+  })
 
   if (searchText === "") {
     renderUI()

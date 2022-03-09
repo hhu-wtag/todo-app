@@ -12,6 +12,19 @@ export async function getAllDataFromDB() {
   }
 }
 
+export async function getFilterdData(done) {
+  const { data, error } = await supabase
+    .from("Todo")
+    .select()
+    .match({ done })
+    .order("created_at", { ascending: false })
+
+  return {
+    data,
+    error,
+  }
+}
+
 export async function insertDataToDB(state) {
   const { title } = state
 

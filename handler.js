@@ -122,7 +122,10 @@ export async function handleDone() {
 
   let editData = getEditDataById(dataID)
 
-  if (editData && editData.oldState === editData.newState) {
+  if (
+    editData &&
+    (editData.oldState === editData.newState || editData.newState === null)
+  ) {
     pTitle.textContent = editData.oldState
   }
 
@@ -246,6 +249,7 @@ export async function handleEdit() {
 
   updateEditDataById(dataID, {
     oldState: pTitle.textContent,
+    newState: null,
   })
 
   let state =

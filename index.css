@@ -1,3 +1,22 @@
 body {
   padding: 0;
 }
+
+.btn {
+  cursor: pointer;
+}
+
+.card {
+  border: red dotted 2px;
+}
+
+#cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.done {
+  text-decoration: line-through;
+  color: #0bc375;
+}

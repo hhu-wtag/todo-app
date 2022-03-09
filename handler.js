@@ -1,4 +1,10 @@
-import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
+import {
+  getGlobalState,
+  updateGlobalState,
+  updateEditDataById,
+  getEditDataById,
+  removeEditDataById,
+} from "./Helpers/globalState.js"
 import {
   deleteDataByID,
   updateDone,
@@ -24,8 +30,6 @@ export async function handleIntialAddTask(event) {
   let sanitizedTitle = sanitizer(title)
 
   if (sanitizedTitle === "") return
-
-  console.log(sanitizedTitle)
 
   //add state to db
   let { error, data } = await insertDataToDB({
@@ -87,6 +91,8 @@ export async function handleDelete() {
   let domToBeDeleted = cardsDOM.querySelector(`div[data-id='${dataID}']`)
 
   cardsDOM.removeChild(domToBeDeleted)
+
+  removeEditDataById(dataID)
 }
 
 export async function handleDone() {
@@ -109,6 +115,16 @@ export async function handleDone() {
 
   //place a strike through class on the title and change color to green
   pTitle.classList.add("done")
+  var sel = window.getSelection()
+
+  sel.removeAllRanges()
+  pTitle.setAttribute("contenteditable", "false")
+
+  let editData = getEditDataById(dataID)
+
+  if (editData && editData.oldState === editData.newState) {
+    pTitle.textContent = editData.oldState
+  }
 
   const divCardFooter = document.querySelector(
     `div[data-id='${dataID}'] > div.cardFooter`
@@ -152,11 +168,8 @@ async function handleSaveMiddleware(dataID) {
 
   const newText = pTitle.textContent
 
-  console.log(newText)
-
   const sanitizedTitle = sanitizer(newText)
 
-  console.log(sanitizedTitle)
   // update localStorage
 
   //TODO handle empty string of newText
@@ -167,7 +180,7 @@ async function handleSaveMiddleware(dataID) {
 
   //if (error) throw new Error("Error while updating DB")
 
-  console.log(data)
+  if (error) throw new Error("Error while updating data")
 
   return new Promise(
     (resolve) => {
@@ -184,17 +197,40 @@ export async function handleSave() {
     `div[data-id='${dataID}'] > p.cardTitle`
   )
 
-  //update data in db
-  let response = await handleSaveMiddleware(dataID)
+  updateEditDataById(dataID, {
+    newState: pTitle.textContent,
+  })
 
-  if (response) {
-    let state = pTitle.getAttribute("contenteditable")
+  let editData = getEditDataById(dataID)
 
-    pTitle.textContent = response[0].title
-    state = state === "true" ? "false" : "true"
+  let editStateChanged = true
 
-    toogleContentEditable(pTitle, state, dataID)
+  let response
+
+  if (editData && editData.oldState === editData.newState) {
+    editStateChanged = false
+
+    response = new Array({
+      title: pTitle.textContent,
+    })
+
+    console.log("No change in edit state")
   }
+  //update data in db if edit state changed
+  if (editStateChanged) {
+    console.log("change detected. Updating DB...")
+
+    response = await handleSaveMiddleware(dataID)
+
+    console.log("DB updated.")
+  }
+
+  let state = pTitle.getAttribute("contenteditable")
+
+  pTitle.textContent = response[0].title
+  state = state === "true" ? "false" : "true"
+
+  toogleContentEditable(pTitle, state, dataID)
 }
 
 export async function handleEdit() {
@@ -207,6 +243,10 @@ export async function handleEdit() {
   const pTitle = document.querySelector(
     `div[data-id='${dataID}'] > p.cardTitle`
   )
+
+  updateEditDataById(dataID, {
+    oldState: pTitle.textContent,
+  })
 
   let state =
     pTitle.getAttribute("contenteditable") === "true" ? "false" : "true"

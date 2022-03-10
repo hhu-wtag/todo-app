@@ -14,10 +14,14 @@ import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 
 const cardsDOM = document.querySelector("#cards")
 
-function displayCards(data) {
+function displayCards(data, range) {
   let card = null
 
-  data.forEach((item) => {
+  console.log({ len: data.length })
+
+  for (let index = 0; index < range; index++) {
+    let item = data[index]
+
     card = createCard({
       itemId: item.id,
       title: item.title,
@@ -27,16 +31,11 @@ function displayCards(data) {
     })
 
     cardsDOM.append(card)
-  })
+  }
 }
 
 export async function renderUI() {
   disableFilterButtons() // disable all three filter buttons
-
-  //remove everything from the list
-  while (cardsDOM.firstChild) {
-    cardsDOM.removeChild(cardsDOM.firstChild)
-  }
 
   // get fresh batch of data from db
   const { error, data } = await getAllDataFromDB()
@@ -48,19 +47,24 @@ export async function renderUI() {
 
   console.log(data)
 
-  displayCards(data)
+  //remove everything from the list
+  while (cardsDOM.firstChild) {
+    cardsDOM.removeChild(cardsDOM.firstChild)
+  }
+  displayCards(data, data.length)
 
   enableFilterButtons()
 }
 
 export async function renderUIOnSearch(data) {
   disableFilterButtons()
+
   //remove everything from the list
   while (cardsDOM.firstChild) {
     cardsDOM.removeChild(cardsDOM.firstChild)
   }
 
-  displayCards(data)
+  displayCards(data, data.length)
   enableFilterButtons()
 }
 
@@ -82,33 +86,15 @@ export async function renderUIOnLoadMore() {
     hideLoadMoreBtn()
   }
 
-  let card = null
-
   while (cardsDOM.firstChild) {
     cardsDOM.removeChild(cardsDOM.firstChild)
   }
 
-  for (let index = 0; index < range; index++) {
-    let item = data[index]
-
-    card = createCard({
-      itemId: item.id,
-      title: item.title,
-      createdAt: item.created_at,
-      done: item.done,
-      doneIn: item.doneIn,
-    })
-
-    cardsDOM.append(card)
-  }
+  displayCards(data, range)
 }
 
 export async function renderUIOnFilter(mode) {
   disableFilterButtons()
-  //remove everything from the list
-  while (cardsDOM.firstChild) {
-    cardsDOM.removeChild(cardsDOM.firstChild)
-  }
 
   let data = null
 
@@ -139,6 +125,11 @@ export async function renderUIOnFilter(mode) {
     data = response.data
   }
 
-  displayCards(data)
+  //remove everything from the list
+  while (cardsDOM.firstChild) {
+    cardsDOM.removeChild(cardsDOM.firstChild)
+  }
+
+  displayCards(data, data.length)
   enableFilterButtons()
 }

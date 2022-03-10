@@ -2,6 +2,7 @@ import {
   disableFilterButtons,
   enableFilterButtons,
   hideLoadMoreBtn,
+  showLoadMoreBtn,
 } from "./buttonStates.js"
 import {
   getAllDataFromDB,
@@ -59,6 +60,10 @@ export async function renderUI() {
 export async function renderUIOnSearch(data) {
   disableFilterButtons()
 
+  updateGlobalState({
+    limit: 10,
+  })
+
   //remove everything from the list
   while (cardsDOM.firstChild) {
     cardsDOM.removeChild(cardsDOM.firstChild)
@@ -72,6 +77,7 @@ export async function renderUIOnSearch(data) {
 
   if (data.length >= limit) {
     range = limit
+    showLoadMoreBtn()
   } else {
     range = data.length
 

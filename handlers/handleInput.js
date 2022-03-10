@@ -7,6 +7,7 @@ import { createCard } from "../domManipulation.js"
 import { getGlobalState } from "../Helpers/globalState.js"
 
 import { insertDataToDB } from "../dbCalls.js"
+import { renderUI } from "../render.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -47,10 +48,17 @@ export async function handleIntialAddTask(event) {
   //append the newly created card
   cardsDOM.prepend(card)
 
+  const inputSearchBar = document.querySelector(".searchBar")
+
+  inputSearchBar.value = ""
   updateGlobalState({
     createCardIsOpened: false,
     title: "",
+    searchText: "",
+    limit: 10,
   })
+
+  renderUI()
 }
 
 export function handleInputField(e) {

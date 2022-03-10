@@ -36,10 +36,10 @@ async function getSearchData() {
     searchText,
   })
 
-  if (searchText === "") {
-    renderUI()
-    return
-  }
+  // if (searchText === "") {
+  //   renderUI()
+  //   return
+  // }
 
   let { data, error } = await searchDB(searchText)
 

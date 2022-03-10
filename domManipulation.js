@@ -1,16 +1,19 @@
 import {
-  handleIntialAddTask,
-  handleIntialDeleteTask,
   handleInputField,
-  handleDone,
+  handleIntialAddTask,
+} from "./handlers/handleInput.js"
+
+import { handleEdit } from "./handlers/handleEdit.js"
+
+import { handleDone } from "./handlers/handleUpdate.js"
+
+import {
   handleDelete,
-  handleEdit,
-} from "./handler.js"
+  handleIntialDeleteTask,
+} from "./handlers/handleDelete.js"
 
 import { doneIcon, editIcon, deleteIcon } from "./Helpers/icons.js"
 import { convertTime } from "./Helpers/time.js"
-
-const cardsDOM = document.querySelector("#cards")
 
 export function createCard({ itemId, title, createdAt, done, doneIn }) {
   const card = document.createElement("div")
@@ -60,7 +63,9 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   if (doneIn === 0) {
     completedInTag.textContent = "Completed in less than a day"
   } else {
-    completedInTag.textContent = `Completed in ${doneIn} days`
+    completedInTag.textContent = `Completed in ${parseInt(
+      doneIn / 86400000
+    )} days`
   }
 
   completedInTag.id = "completedInTag"
@@ -113,6 +118,7 @@ export function createInitialCard() {
   buttonsDiv.id = "initial_button_div"
 
   const addTaskBtn = document.createElement("button")
+  addTaskBtn.classList.add("btn")
   addTaskBtn.innerText = "Add Task"
   addTaskBtn.id = "addTaskBtn"
   addTaskBtn.addEventListener("click", handleIntialAddTask)
@@ -120,6 +126,7 @@ export function createInitialCard() {
   const deleteTaskBtn = document.createElement("span")
   deleteTaskBtn.id = "deleteTaskBtn"
   deleteTaskBtn.innerHTML = deleteIcon()
+  deleteTaskBtn.classList.add("btn")
   deleteTaskBtn.addEventListener("click", handleIntialDeleteTask)
 
   buttonsDiv.appendChild(addTaskBtn)

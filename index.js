@@ -1,25 +1,50 @@
 import { createInitialCard } from "./domManipulation.js"
-import { updateGlobalState, getGlobalState } from "./Helpers/globalState.js"
-import { renderUI } from "./render.js"
+import { handleFilterAll, handleFilterCom, handleFilterInc } from "./filter.js"
+import {
+  updateGlobalState,
+  getGlobalState,
+  resetGlobalState,
+} from "./Helpers/globalState.js"
+import { renderUI, renderUIOnLoadMore } from "./render.js"
+
+import { toogleSearchBar, handleSearch } from "./search.js"
 
 document.addEventListener("DOMContentLoaded", (event) => {
   const createBtnDOM = document.querySelector("#createBtn")
   const cardsDOM = document.querySelector("#cards")
 
-  //globalState
+  const svgSearchIcon = document.querySelector(".searchIcon")
+  const inputSearchBar = document.querySelector(".searchBar")
 
-  let inputState = ""
+  const btnFilterAll = document.querySelector(".btnFilterAll")
+  const btnFilterInc = document.querySelector(".btnFilterInc")
+  const btnFilterCom = document.querySelector(".btnFilterCom")
+
+  const btnLoadMore = document.querySelector(".btnLoadMore")
 
   ;(function mounted() {
-    updateGlobalState({
-      createCardIsOpened: false,
-      title: "",
-      contentEditable: false,
-      editModeOn: false,
-    })
+    resetGlobalState()
 
     renderUI()
   })()
+
+  svgSearchIcon.addEventListener("click", () => toogleSearchBar(inputSearchBar))
+
+  inputSearchBar.addEventListener("input", handleSearch)
+
+  btnFilterAll.addEventListener("click", handleFilterAll)
+  btnFilterInc.addEventListener("click", handleFilterInc)
+  btnFilterCom.addEventListener("click", handleFilterCom)
+
+  btnLoadMore.addEventListener("click", function () {
+    let { limit } = getGlobalState()
+
+    updateGlobalState({
+      limit: limit + 10,
+    })
+
+    renderUIOnLoadMore()
+  })
 
   createBtnDOM.addEventListener("click", (e) => {
     let { createCardIsOpened } = getGlobalState()

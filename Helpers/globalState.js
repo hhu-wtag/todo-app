@@ -54,6 +54,7 @@ export function getGlobalState() {
     globalState = {
       createCardIsOpened: false,
       limit: 10,
+      limitValue: 10,
       searchText: "",
       title: "",
     }
@@ -79,9 +80,19 @@ export function resetGlobalState() {
     editModeOn: false,
     fetchingData: false,
     limit: 10,
+    limitValue: 10,
   }
 
   state = JSON.stringify(state)
 
   localStorage.setItem("state", state)
+}
+
+export function resetLimit() {
+  let { limit, limitValue } = getGlobalState()
+
+  //reset limit
+  updateGlobalState({
+    limit: limitValue,
+  })
 }

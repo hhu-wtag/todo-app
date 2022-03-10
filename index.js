@@ -1,4 +1,4 @@
-import { createInitialCard } from "./domManipulation.js"
+import { createInitialCard, hideNoDataIcon } from "./domManipulation.js"
 import { handleFilterAll, handleFilterCom, handleFilterInc } from "./filter.js"
 import {
   updateGlobalState,
@@ -37,10 +37,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
   btnFilterCom.addEventListener("click", handleFilterCom)
 
   btnLoadMore.addEventListener("click", function () {
-    let { limit } = getGlobalState()
+    let { limitValue, limit } = getGlobalState()
 
     updateGlobalState({
-      limit: limit + 10,
+      limit: limit + limitValue,
     })
 
     renderUIOnLoadMore()
@@ -52,6 +52,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     if (createCardIsOpened === false) {
       updateGlobalState({ createCardIsOpened: true })
+
+      hideNoDataIcon()
 
       card = createInitialCard()
 

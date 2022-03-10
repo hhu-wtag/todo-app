@@ -1,8 +1,10 @@
 import {
+  disableCreateButton,
   disableFilterButtons,
   enableFilterButtons,
   hideLoadMoreBtn,
   showLoadMoreBtn,
+  enableCreateButton,
 } from "./buttonStates.js"
 import {
   getAllDataFromDB,
@@ -10,8 +12,12 @@ import {
   getDataOnLoadMore,
   getFilterdData,
 } from "./dbCalls.js"
-import { createCard } from "./domManipulation.js"
-import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
+import { createCard, showNoDataIcon } from "./domManipulation.js"
+import {
+  getGlobalState,
+  resetLimit,
+  updateGlobalState,
+} from "./Helpers/globalState.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -37,32 +43,61 @@ function displayCards(data, range) {
 
 export async function renderUI() {
   disableFilterButtons() // disable all three filter buttons
+  disableCreateButton() // disable create button
+  hideLoadMoreBtn() // hideLoadMoreBtn()
 
   // get fresh batch of data from db
-  const { error, data } = await getAllDataFromDB()
+  let { error, data } = await getAllDataFromDB()
 
   if (error) {
     throw new Error("Error while fetching data from supabase")
-    return
   }
 
-  console.log(data)
+  if (data.length === 0) {
+    // no data to show.
+    showNoDataIcon()
+    updateGlobalState({
+      fetchedDataLength: 0,
+    })
+  } else {
+    updateGlobalState({
+      fetchedDataLength: data.length,
+    })
 
-  //remove everything from the list
-  while (cardsDOM.firstChild) {
-    cardsDOM.removeChild(cardsDOM.firstChild)
+    //remove everything from the list
+    while (cardsDOM.firstChild) {
+      cardsDOM.removeChild(cardsDOM.firstChild)
+    }
+
+    let { limit } = getGlobalState()
+
+    limit = parseInt(limit)
+
+    let range
+
+    if (data.length >= limit) {
+      range = limit
+      showLoadMoreBtn()
+    } else {
+      range = data.length
+      console.log("here")
+
+      //all the data has been fetched
+      //hide the load more button
+
+      hideLoadMoreBtn()
+    }
+
+    displayCards(data, range)
+    enableFilterButtons()
+    enableCreateButton()
   }
-  displayCards(data, data.length)
-
-  enableFilterButtons()
 }
 
 export async function renderUIOnSearch(data) {
   disableFilterButtons()
 
-  updateGlobalState({
-    limit: 10,
-  })
+  resetLimit()
 
   //remove everything from the list
   while (cardsDOM.firstChild) {
@@ -120,6 +155,9 @@ export async function renderUIOnLoadMore() {
 
 export async function renderUIOnFilter(mode) {
   disableFilterButtons()
+
+  //reset limit
+  resetLimit()
 
   let data = null
 

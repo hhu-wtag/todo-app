@@ -64,7 +64,24 @@ export async function renderUIOnSearch(data) {
     cardsDOM.removeChild(cardsDOM.firstChild)
   }
 
-  displayCards(data, data.length)
+  let { limit } = getGlobalState()
+
+  limit = parseInt(limit)
+
+  let range
+
+  if (data.length >= limit) {
+    range = limit
+  } else {
+    range = data.length
+
+    //all the data has been fetched
+    //hide the load more button
+
+    hideLoadMoreBtn()
+  }
+
+  displayCards(data, range)
   enableFilterButtons()
 }
 
@@ -72,6 +89,8 @@ export async function renderUIOnLoadMore() {
   let { searchText, limit } = getGlobalState()
 
   let { data, error } = await getDataOnLoadMore(searchText)
+
+  if (error) throw new Error("Error while getting data on load more event")
 
   let range
 

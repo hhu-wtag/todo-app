@@ -1,6 +1,10 @@
 import { createInitialCard } from "./domManipulation.js"
 import { handleFilterAll, handleFilterCom, handleFilterInc } from "./filter.js"
-import { updateGlobalState, getGlobalState } from "./Helpers/globalState.js"
+import {
+  updateGlobalState,
+  getGlobalState,
+  resetGlobalState,
+} from "./Helpers/globalState.js"
 import { renderUI, renderUIOnLoadMore } from "./render.js"
 
 import { toogleSearchBar, handleSearch } from "./search.js"
@@ -19,14 +23,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const btnLoadMore = document.querySelector(".btnLoadMore")
 
   ;(function mounted() {
-    updateGlobalState({
-      createCardIsOpened: false,
-      title: "",
-      contentEditable: false,
-      editModeOn: false,
-      fetchingData: false,
-      limit: 10,
-    })
+    resetGlobalState()
 
     renderUI()
   })()

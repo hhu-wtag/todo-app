@@ -46,31 +46,3 @@ export function hideLoadMoreBtn() {
 
   btnLoadMore.setAttribute("hidden", true)
 }
-
-export function hideEditBtn() {
-  const btnEdit = document.querySelector(".editBtn")
-
-  btnEdit.setAttribute("hidden", true)
-}
-
-export function showEditBtn() {
-  const btnEdit = document.querySelector(".editBtn")
-
-  if (btnEdit.getAttribute("hidden")) {
-    btnEdit.removeAttribute("hidden")
-  }
-}
-
-export function hideDoneBtn() {
-  const btnDone = document.querySelector(".doneBtn")
-
-  btnDone.setAttribute("hidden", true)
-}
-
-export function showDoneBtn() {
-  const btnDone = document.querySelector(".doneBtn")
-
-  if (btnDone.getAttribute("hidden")) {
-    btnDone.removeAttribute("hidden")
-  }
-}

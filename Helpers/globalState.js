@@ -50,8 +50,12 @@ export function getGlobalState() {
   let globalState = null
 
   if (localStorage.getItem("state") === null) {
+    console.log("here")
     globalState = {
       createCardIsOpened: false,
+      limit: 10,
+      searchText: "",
+      title: "",
     }
     localStorage.setItem("state", JSON.stringify(globalState))
   } else {
@@ -64,4 +68,20 @@ export function removeEditDataById(id) {
   if (localStorage.getItem(id) === null) return
 
   localStorage.removeItem(id)
+}
+
+export function resetGlobalState() {
+  let state = {
+    createCardIsOpened: false,
+    title: "",
+    searchText: "",
+    contentEditable: false,
+    editModeOn: false,
+    fetchingData: false,
+    limit: 10,
+  }
+
+  state = JSON.stringify(state)
+
+  localStorage.setItem("state", state)
 }

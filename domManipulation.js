@@ -15,8 +15,6 @@ import {
 import { doneIcon, editIcon, deleteIcon } from "./Helpers/icons.js"
 import { convertTime } from "./Helpers/time.js"
 
-const cardsDOM = document.querySelector("#cards")
-
 export function createCard({ itemId, title, createdAt, done, doneIn }) {
   const card = document.createElement("div")
   card.setAttribute("data-id", itemId)

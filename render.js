@@ -18,6 +18,7 @@ import {
   resetLimit,
   updateGlobalState,
 } from "./Helpers/globalState.js"
+import { hideMainBodySpinner, showMainBodySpinner } from "./spinner.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -45,6 +46,7 @@ export async function renderUI() {
   disableFilterButtons() // disable all three filter buttons
   disableCreateButton() // disable create button
   hideLoadMoreBtn() // hideLoadMoreBtn()
+  showMainBodySpinner() // show main loading spinner
 
   // get fresh batch of data from db
   let { error, data } = await getAllDataFromDB()
@@ -52,6 +54,8 @@ export async function renderUI() {
   if (error) {
     throw new Error("Error while fetching data from supabase")
   }
+
+  hideMainBodySpinner() // hide main loading spinner
 
   if (data.length === 0) {
     // no data to show.
@@ -129,9 +133,11 @@ export async function renderUIOnSearch(data) {
 export async function renderUIOnLoadMore() {
   let { searchText, limit } = getGlobalState()
 
+  showMainBodySpinner()
   let { data, error } = await getDataOnLoadMore(searchText)
 
   if (error) throw new Error("Error while getting data on load more event")
+  //hideMainBodySpinner()
 
   let range
 

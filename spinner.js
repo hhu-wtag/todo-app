@@ -17,3 +17,19 @@ export function hideSpinner(id) {
   divCard.classList.remove("lower__opacity")
   divSpinner.setAttribute("hidden", true)
 }
+
+export function showMainBodySpinner() {
+  const divMainBody = document.querySelector(".main__body")
+  const divSpinner = document.querySelector(".main_spinner__container")
+
+  divMainBody.classList.add("lower__opacity")
+  divSpinner.removeAttribute("hidden")
+}
+
+export function hideMainBodySpinner() {
+  const divMainBody = document.querySelector(".main__body")
+  const divSpinner = document.querySelector(".main_spinner__container")
+
+  divMainBody.classList.remove("lower__opacity")
+  divSpinner.setAttribute("hidden", true)
+}

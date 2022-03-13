@@ -161,7 +161,7 @@ export async function renderUIOnLoadMore() {
 
 export async function renderUIOnFilter(mode) {
   disableFilterButtons()
-
+  showMainBodySpinner()
   //reset limit
   resetLimit()
 
@@ -173,6 +173,7 @@ export async function renderUIOnFilter(mode) {
     //show only the incomplete data
 
     let response = await getFilterdData(false, searchText)
+    hideMainBodySpinner()
 
     if (response.error)
       throw new Error("Error while fetching incomplete filtered data")
@@ -180,14 +181,14 @@ export async function renderUIOnFilter(mode) {
     data = response.data
   } else if (mode === "all") {
     let response = await getAllFilterdData(searchText)
-
+    hideMainBodySpinner()
     if (response.error)
       throw new Error("Error while fetching incomplete filtered data")
 
     data = response.data
   } else {
     let response = await getFilterdData(true, searchText)
-
+    hideMainBodySpinner()
     if (response.error)
       throw new Error("Error while fetching complete filtered data")
 

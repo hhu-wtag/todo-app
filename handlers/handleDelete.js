@@ -12,6 +12,7 @@ import {
 } from "../dbCalls.js"
 import { showNoDataIcon } from "../domManipulation.js"
 import { showToast } from "../toast.js"
+import { hideSpinner, showSpinner } from "../spinner.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -36,12 +37,16 @@ export function handleIntialDeleteTask(event) {
 export async function handleDelete() {
   let dataID = this.getAttribute("data-id")
 
+  showSpinner(dataID)
+
   let { error, data } = await deleteDataByID(dataID)
 
   if (error) {
     showToast(dataID, false) //show toast for failed api call
     throw new Error("Error Occured when deleting from DB")
   }
+
+  hideSpinner(dataID)
 
   //show toast for successful api call
 

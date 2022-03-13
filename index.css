@@ -10,9 +10,27 @@ body {
   cursor: pointer;
 }
 
+.toasts {
+  position: fixed;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 999;
+}
+
 .card {
   border: red dotted 2px;
   position: relative;
+}
+
+.splashScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+
+  margin: 0 auto;
 }
 
 #cards {

@@ -1,6 +1,7 @@
 import { searchDB } from "./dbCalls.js"
 import { updateGlobalState } from "./Helpers/globalState.js"
 import { renderUI, renderUIOnSearch } from "./render.js"
+import { hideMainBodySpinner, showMainBodySpinner } from "./spinner.js"
 
 export function toogleSearchBar(inputSearchBar) {
   if (inputSearchBar.getAttribute("hidden") === null) {
@@ -21,6 +22,7 @@ function debounce(func, delay = 250) {
     const later = () => {
       timer = null
 
+      showMainBodySpinner()
       func.call(this, ...args)
     }
 
@@ -44,6 +46,7 @@ async function getSearchData() {
   let { data, error } = await searchDB(searchText)
 
   if (error) throw new Error("Error while getting searchd data from DB")
+  hideMainBodySpinner()
 
   renderUIOnSearch(data)
 }

@@ -1,4 +1,4 @@
-import { getGlobalState } from "./Helpers/globalState.js"
+import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 import supabase from "./supabase.js"
 
 export async function getAllDataFromDB() {
@@ -9,6 +9,10 @@ export async function getAllDataFromDB() {
     .select()
     .order("created_at", { ascending: false })
     .limit(limit)
+
+  updateGlobalState({
+    fetchedDataLength: data.length,
+  })
 
   return {
     data,
@@ -23,6 +27,10 @@ export async function getDataOnLoadMore(searchText) {
     .ilike("title", `%${searchText}%`)
     .order("created_at", { ascending: false })
 
+  updateGlobalState({
+    fetchedDataLength: data.length,
+  })
+
   return {
     data,
     error,
@@ -36,6 +44,10 @@ export async function getFilterdData(done, searchText) {
     .match({ done })
     .ilike("title", `%${searchText}%`)
     .order("created_at", { ascending: false })
+
+  updateGlobalState({
+    fetchedDataLength: data.length,
+  })
 
   return {
     data,

@@ -1,8 +1,10 @@
 import {
+  disableCreateButton,
   disableFilterButtons,
   enableFilterButtons,
   hideLoadMoreBtn,
   showLoadMoreBtn,
+  enableCreateButton,
 } from "./buttonStates.js"
 import {
   getAllDataFromDB,
@@ -10,8 +12,13 @@ import {
   getDataOnLoadMore,
   getFilterdData,
 } from "./dbCalls.js"
-import { createCard } from "./domManipulation.js"
-import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
+import { createCard, showNoDataIcon } from "./domManipulation.js"
+import {
+  getGlobalState,
+  resetLimit,
+  updateGlobalState,
+} from "./Helpers/globalState.js"
+import { hideMainBodySpinner, showMainBodySpinner } from "./spinner.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -37,32 +44,64 @@ function displayCards(data, range) {
 
 export async function renderUI() {
   disableFilterButtons() // disable all three filter buttons
+  disableCreateButton() // disable create button
+  hideLoadMoreBtn() // hideLoadMoreBtn()
+  showMainBodySpinner() // show main loading spinner
 
   // get fresh batch of data from db
-  const { error, data } = await getAllDataFromDB()
+  let { error, data } = await getAllDataFromDB()
 
   if (error) {
     throw new Error("Error while fetching data from supabase")
-    return
   }
 
-  console.log(data)
+  hideMainBodySpinner() // hide main loading spinner
 
-  //remove everything from the list
-  while (cardsDOM.firstChild) {
-    cardsDOM.removeChild(cardsDOM.firstChild)
+  if (data.length === 0) {
+    // no data to show.
+    showNoDataIcon()
+    updateGlobalState({
+      fetchedDataLength: 0,
+    })
+  } else {
+    updateGlobalState({
+      fetchedDataLength: data.length,
+    })
+
+    //remove everything from the list
+    while (cardsDOM.firstChild) {
+      cardsDOM.removeChild(cardsDOM.firstChild)
+    }
+
+    let { limit } = getGlobalState()
+
+    limit = parseInt(limit)
+
+    let range
+
+    if (data.length >= limit) {
+      range = limit
+      showLoadMoreBtn()
+    } else {
+      range = data.length
+      console.log("here")
+
+      //all the data has been fetched
+      //hide the load more button
+
+      hideLoadMoreBtn()
+    }
+
+    displayCards(data, range)
+    enableFilterButtons()
+    enableCreateButton()
   }
-  displayCards(data, data.length)
-
-  enableFilterButtons()
 }
 
 export async function renderUIOnSearch(data) {
   disableFilterButtons()
 
-  updateGlobalState({
-    limit: 10,
-  })
+  resetLimit()
 
   //remove everything from the list
   while (cardsDOM.firstChild) {
@@ -94,9 +133,11 @@ export async function renderUIOnSearch(data) {
 export async function renderUIOnLoadMore() {
   let { searchText, limit } = getGlobalState()
 
+  showMainBodySpinner()
   let { data, error } = await getDataOnLoadMore(searchText)
 
   if (error) throw new Error("Error while getting data on load more event")
+  //hideMainBodySpinner()
 
   let range
 
@@ -120,6 +161,9 @@ export async function renderUIOnLoadMore() {
 
 export async function renderUIOnFilter(mode) {
   disableFilterButtons()
+  showMainBodySpinner()
+  //reset limit
+  resetLimit()
 
   let data = null
 
@@ -129,6 +173,7 @@ export async function renderUIOnFilter(mode) {
     //show only the incomplete data
 
     let response = await getFilterdData(false, searchText)
+    hideMainBodySpinner()
 
     if (response.error)
       throw new Error("Error while fetching incomplete filtered data")
@@ -136,14 +181,14 @@ export async function renderUIOnFilter(mode) {
     data = response.data
   } else if (mode === "all") {
     let response = await getAllFilterdData(searchText)
-
+    hideMainBodySpinner()
     if (response.error)
       throw new Error("Error while fetching incomplete filtered data")
 
     data = response.data
   } else {
     let response = await getFilterdData(true, searchText)
-
+    hideMainBodySpinner()
     if (response.error)
       throw new Error("Error while fetching complete filtered data")
 

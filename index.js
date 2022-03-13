@@ -1,4 +1,4 @@
-import { createInitialCard } from "./domManipulation.js"
+import { createInitialCard, hideNoDataIcon } from "./domManipulation.js"
 import { handleFilterAll, handleFilterCom, handleFilterInc } from "./filter.js"
 import {
   updateGlobalState,
@@ -9,7 +9,31 @@ import { renderUI, renderUIOnLoadMore } from "./render.js"
 
 import { toogleSearchBar, handleSearch } from "./search.js"
 
+let splashScreenIsOn = true
+let domIsLoaded = false
+
+setTimeout(setSplashScreenToOff, 2000)
+
 document.addEventListener("DOMContentLoaded", (event) => {
+  domIsLoaded = true
+
+  if (splashScreenIsOn === false) {
+    //dom is loaded and splash screen time has ended. No race condition here.
+    //We can safely load the main screen
+    initialLoad() // show the main screen
+  } else {
+  }
+})
+
+function setSplashScreenToOff() {
+  splashScreenIsOn = false
+
+  if (domIsLoaded) {
+    initialLoad()
+  }
+}
+
+function initialLoad() {
   const createBtnDOM = document.querySelector("#createBtn")
   const cardsDOM = document.querySelector("#cards")
 
@@ -22,6 +46,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   const btnLoadMore = document.querySelector(".btnLoadMore")
 
+  const divSplashScreen = document.querySelector(".splashScreen")
+  const divMainScreen = document.querySelector(".mainScreen")
+
+  divSplashScreen.style.display = "none"
+  divMainScreen.removeAttribute("hidden")
   ;(function mounted() {
     resetGlobalState()
 
@@ -37,10 +66,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
   btnFilterCom.addEventListener("click", handleFilterCom)
 
   btnLoadMore.addEventListener("click", function () {
-    let { limit } = getGlobalState()
+    let { limitValue, limit } = getGlobalState()
 
     updateGlobalState({
-      limit: limit + 10,
+      limit: limit + limitValue,
     })
 
     renderUIOnLoadMore()
@@ -53,6 +82,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (createCardIsOpened === false) {
       updateGlobalState({ createCardIsOpened: true })
 
+      hideNoDataIcon()
+
       card = createInitialCard()
 
       cardsDOM.prepend(card)
@@ -60,4 +91,4 @@ document.addEventListener("DOMContentLoaded", (event) => {
       return
     }
   })
-})
+}

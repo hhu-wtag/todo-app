@@ -8,6 +8,7 @@ body {
 
 .card {
   border: red dotted 2px;
+  position: relative;
 }
 
 #cards {
@@ -23,4 +24,30 @@ body {
 
 .btn {
   cursor: pointer;
+}
+
+.lower__opacity {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.spinner__container {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  top: calc(50% - 30px);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

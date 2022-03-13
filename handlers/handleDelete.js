@@ -11,6 +11,7 @@ import {
   updateDataByID,
 } from "../dbCalls.js"
 import { showNoDataIcon } from "../domManipulation.js"
+import { showToast } from "../toast.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -38,8 +39,13 @@ export async function handleDelete() {
   let { error, data } = await deleteDataByID(dataID)
 
   if (error) {
+    showToast(dataID, false) //show toast for failed api call
     throw new Error("Error Occured when deleting from DB")
   }
+
+  //show toast for successful api call
+
+  showToast(dataID, true)
 
   let domToBeDeleted = cardsDOM.querySelector(`div[data-id='${dataID}']`)
 

@@ -12,7 +12,7 @@ import {
   handleIntialDeleteTask,
 } from "./handlers/handleDelete.js"
 
-import { doneIcon, editIcon, deleteIcon } from "./Helpers/icons.js"
+import { doneIcon, editIcon, deleteIcon, loaderIcon } from "./Helpers/icons.js"
 import { convertTime } from "./Helpers/time.js"
 import { disableFilterButtons, hideLoadMoreBtn } from "./buttonStates.js"
 
@@ -20,6 +20,12 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   const card = document.createElement("div")
   card.setAttribute("data-id", itemId)
   card.classList.add("card")
+
+  const spinner = document.createElement("div")
+  spinner.classList.add("spinner__container")
+  card.setAttribute("data-id", itemId)
+  spinner.innerHTML = loaderIcon()
+  spinner.setAttribute("hidden", true)
 
   const cardHeader = document.createElement("div")
   cardHeader.setAttribute("data-id", itemId)
@@ -98,6 +104,7 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   cardHeader.appendChild(pTitle)
   cardHeader.appendChild(pCreatedAt)
 
+  card.appendChild(spinner)
   card.appendChild(cardHeader)
   card.appendChild(cardFooter)
 

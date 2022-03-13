@@ -12,6 +12,8 @@ import { completedInDays } from "../Helpers/time.js"
 import sanitizer from "../Helpers/santizer.js"
 
 import { updateDone } from "../dbCalls.js"
+import { showToast } from "../toast.js"
+import { hideSpinner, showSpinner } from "../spinner.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -32,9 +34,14 @@ async function handleSaveMiddleware(dataID) {
 
   const { data, error } = await updateDataByID(dataID, sanitizedTitle)
 
-  //if (error) throw new Error("Error while updating DB")
+  if (error) {
+    showToast(dataID, false) // show failed toast
 
-  if (error) throw new Error("Error while updating data")
+    throw new Error("Error while updating data")
+  }
+
+  // show success toast
+  showToast(dataID, true)
 
   return new Promise(
     (resolve) => {
@@ -73,10 +80,14 @@ export async function handleSave() {
   //update data in db if edit state changed
   if (editStateChanged) {
     console.log("change detected. Updating DB...")
+    //start spinner
+    showSpinner(dataID)
 
     response = await handleSaveMiddleware(dataID)
 
     console.log("DB updated.")
+    //start spinner
+    hideSpinner(dataID)
   }
 
   let state = pTitle.getAttribute("contenteditable")
@@ -98,12 +109,25 @@ export async function handleDone() {
   const pTitle = divCardHeader.querySelector("#title")
   const createdAt = divCardHeader.querySelector("#createdAt").textContent
 
-  const days = completedInDays(createdAt)
+  let days = completedInDays(createdAt)
+  days = days / 8.64e7
+
+  //showSpinner
+  showSpinner(dataID)
 
   //update DB
   const { data, error } = await updateDone(dataID, days)
 
-  if (error) throw new Error("Error while updating done state")
+  if (error) {
+    showToast(dataID, false)
+    throw new Error("Error while updating done state")
+  }
+
+  //hideSpinner
+  hideSpinner(dataID)
+
+  //show Toast
+  showToast(dataID, true)
 
   //place a strike through class on the title and change color to green
   pTitle.classList.add("done")

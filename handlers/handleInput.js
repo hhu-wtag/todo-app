@@ -13,6 +13,7 @@ import {
   disableFilterButtons,
   enableCreateButton,
 } from "../buttonStates.js"
+import { showToast } from "../toast.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -35,8 +36,7 @@ export async function handleIntialAddTask(event) {
   })
 
   if (error) {
-    console.error(error)
-    return
+    throw new Error("Error while inserting data in DB")
   }
 
   let { created_at, id, title: titleFromDB } = data[0]
@@ -47,6 +47,8 @@ export async function handleIntialAddTask(event) {
     title: titleFromDB,
     createdAt: created_at,
   })
+
+  showToast(id, true)
 
   //remove the intialCard that was added for data adding purpose
 

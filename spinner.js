@@ -22,7 +22,8 @@ export function showMainBodySpinner() {
   const divMainBody = document.querySelector(".main__body")
   const divSpinner = document.querySelector(".main_spinner__container")
 
-  divMainBody.classList.add("lower__opacity")
+  //TODO: when loading set different styles
+
   divSpinner.removeAttribute("hidden")
 }
 
@@ -30,6 +31,6 @@ export function hideMainBodySpinner() {
   const divMainBody = document.querySelector(".main__body")
   const divSpinner = document.querySelector(".main_spinner__container")
 
-  divMainBody.classList.remove("lower__opacity")
+  //TODO: when loading set different styles
   divSpinner.setAttribute("hidden", true)
 }

@@ -5,6 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./index.css" />
     <title>Todo App</title>
   </head>
@@ -30,7 +36,7 @@
     </div>
 
     <div class="mainScreen" hidden>
-      <header>
+      <header class="nav">
         <div class="headerLeft">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +64,7 @@
             viewBox="0 0 24 24"
             fill="none"
             id="searchIcon"
-            class="searchIcon"
+            class="searchIcon btn"
           >
             <path
               d="M23.111 20.058L18.134 15.081C19.099 13.561 19.657 11.759 19.657 9.83C19.657 4.41 15.248 0 9.828 0C4.408 0 0 4.41 0 9.83C0 15.25 4.408 19.66 9.829 19.66C11.663 19.66 13.381 19.155 14.851 18.277L19.872 23.298C22.016 25.439 25.256 22.202 23.111 20.058ZM3.047 9.83C3.047 6.091 6.09 3.048 9.829 3.048C13.568 3.048 16.611 6.09 16.611 9.83C16.611 13.57 13.568 16.612 9.829 16.612C6.09 16.612 3.047 13.569 3.047 9.83ZM5.057 8.066C7.041 3.467 13.721 4 14.979 8.815C12.445 5.841 7.986 5.521 5.057 8.066Z"
@@ -74,7 +80,7 @@
 
       <div class="container">
         <div>
-          <h3>Add Tasks</h3>
+          <h3 class="container__addTask">Add Tasks</h3>
         </div>
 
         <div class="main__body">
@@ -96,7 +102,23 @@
 
           <div class="btnsContainer">
             <div class="btnCreate">
-              <button id="createBtn" class="btn">Create</button>
+              <button id="createBtn" class="btn createBtn">
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M16 6.66667H9.33333V0H6.66667V6.66667H0V9.33333H6.66667V16H9.33333V9.33333H16V6.66667Z"
+                      fill="white"
+                    />
+                  </svg>
+                </span>
+                Create
+              </button>
             </div>
 
             <div class="btnsFilter">
@@ -215,7 +237,7 @@
             <p class="noData_text">You didn't add any task. Please, add one.</p>
           </div>
           <div id="cards"></div>
-          <div>
+          <div class="container__btnLoadMore">
             <button class="btn btnLoadMore">Load More</button>
           </div>
         </div>

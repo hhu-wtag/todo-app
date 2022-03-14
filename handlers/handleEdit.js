@@ -32,6 +32,7 @@ export function toogleContentEditable(el, contentEditableIsOn, dataID) {
 
   if (contentEditableIsOn === "true") {
     el.setAttribute("contenteditable", "true")
+    el.classList.add("height_full")
     const range = document.createRange()
 
     range.setStart(el.childNodes[0], el.childNodes[0].length)

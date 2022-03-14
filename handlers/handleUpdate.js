@@ -58,6 +58,8 @@ export async function handleSave() {
     `div[data-id='${dataID}'] > p.cardTitle`
   )
 
+  pTitle.classList.remove("height_full")
+
   updateEditDataById(dataID, {
     newState: pTitle.textContent,
   })
@@ -108,6 +110,8 @@ export async function handleDone() {
 
   const pTitle = divCardHeader.querySelector("#title")
   const createdAt = divCardHeader.querySelector("#createdAt").textContent
+
+  //pTitle.classList.remove("height_full")
 
   let days = completedInDays(createdAt)
   days = days / 8.64e7

@@ -137,7 +137,7 @@ export async function renderUIOnLoadMore() {
   let { data, error } = await getDataOnLoadMore(searchText)
 
   if (error) throw new Error("Error while getting data on load more event")
-  //hideMainBodySpinner()
+  hideMainBodySpinner()
 
   let range
 

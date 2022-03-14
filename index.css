@@ -1,13 +1,241 @@
+:root {
+  --bg-primary: #f8f9ff;
+  --bg-secondary: #ffffff;
+  --bg-alternative: #7a8dfd;
+  --text-primary: #32394b;
+  --text-secondary: #bbbdd0;
+  --text-success: #0bc375;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   padding: 0;
+  margin: 0;
+  width: 100vw;
+  font-family: "Roboto", sans-serif;
+  background: var(--bg-primary);
+}
+
+.nav {
+  display: flex;
+  padding: 15px 150px 15px 150px;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid #dde2ff;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.headerLeft > p {
+  margin-left: 10px;
+  font-size: 36px;
+  color: var(--bg-alternative);
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.headerLeft > input {
+  border: 3px solid #d1d8ff;
+  border-radius: 5px;
+  padding: 8px 18px;
+  width: 420px;
+  font-size: 12px;
+}
+
+.headerRight > *:not(:last-child) {
+  margin-right: 18px;
+}
+
+.container {
+  padding: 64px 150px 0px 150px;
+}
+
+.container__addTask {
+  margin-bottom: 28px;
+  font-size: 30px;
+  color: var(--text-primary);
+}
+
+.btnsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 34px;
+  background: var(--bg-primary);
+}
+
+#initial_input_box {
+  resize: none;
+  border: 3px solid #d1d8ff;
+  border-radius: 5px;
+}
+
+#initial_button_div {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+#initial_button_div > *:not(:last-child) {
+  margin-right: 18px;
+}
+
+#addTaskBtn {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border: 1px solid #d1d8ff;
+  border-radius: 5px;
+}
+
+.createBtn {
+  display: flex;
+  align-items: center;
+  padding: 8px 18px;
+  background: var(--bg-alternative);
+  border: none;
+  border-radius: 5px;
+  color: var(--bg-secondary);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.createBtn > span {
+  margin-right: 5px;
+}
+
+.btnsFilter > * {
+  color: var(--text-primary);
+  background: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  border: 1px solid #dde2ff;
+  border-radius: 5px;
+  padding: 8px 18px;
+}
+
+.btnsFilter > *:not(:last-child) {
+  margin-right: 18px;
+}
+
+.noData {
+  background: var(--bg-primary);
+}
+
+#cards {
+  display: flex;
+  flex-wrap: wrap;
+  --gap: 24px;
+  --columns: 4;
+  gap: var(--gap);
+  max-width: 800px;
+  width: 100%;
+  max-width: 1920px;
+}
+
+.card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid #dde2ff;
+  box-sizing: border-box;
+  border-radius: 5px;
+
+  width: calc(
+    (100% / var(--columns)) - var(--gap) + (var(--gap) / var(--columns))
+  );
+
+  padding: 15px 15px 15px 15px;
+}
+
+.cardHeader {
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.cardTitle {
+  font-size: 24px;
+  font-weight: 100;
+  margin-bottom: 9px;
+}
+
+.cardCreatedAt {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#cardFooterLeft {
+  display: flex;
+  align-items: center;
+}
+
+#cardFooterLeft > *:not(:last-child) {
+  margin-right: 26px;
+}
+
+.completedInTag {
+  background: var(--bg-alternative);
+  color: var(--bg-secondary);
+  border-radius: 5px;
+  padding: 5px 12px;
+  font-size: 12px;
 }
 
 .main__body {
   position: relative;
 }
 
+.container__btnLoadMore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 42px;
+}
+
+.btnLoadMore {
+  border: 1px solid #dde2ff;
+  border-radius: 5px;
+  padding: 8px 18px;
+  color: var(--bg-secondary);
+  background: var(--text-primary);
+}
+
 .btn {
   cursor: pointer;
+}
+
+.btnSave {
+  border: 1px solid #dde2ff;
+  background: var(--bg-secondary);
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
 }
 
 .toasts {
@@ -18,11 +246,6 @@ body {
   z-index: 999;
 }
 
-.card {
-  border: red dotted 2px;
-  position: relative;
-}
-
 .splashScreen {
   display: flex;
   align-items: center;
@@ -31,12 +254,6 @@ body {
   overflow: hidden;
 
   margin: 0 auto;
-}
-
-#cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
 }
 
 .done {
@@ -84,4 +301,18 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+button:disabled,
+button[disabled] {
+  opacity: 0.5;
+}
+
+div:disabled,
+div[disabled] {
+  opacity: 0.5;
+}
+
+.height_full {
+  height: 100%;
 }

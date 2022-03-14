@@ -1,3 +1,11 @@
+import {
+  disableCreateButton,
+  disableFilterButtons,
+  disableMainBody,
+  enableCreateButton,
+  enableFilterButtons,
+  enableMainBody,
+} from "./buttonStates.js"
 import { searchDB } from "./dbCalls.js"
 import { updateGlobalState } from "./Helpers/globalState.js"
 import { renderUI, renderUIOnSearch } from "./render.js"
@@ -23,6 +31,7 @@ function debounce(func, delay = 250) {
       timer = null
 
       showMainBodySpinner()
+      disableMainBody()
       func.call(this, ...args)
     }
 
@@ -47,6 +56,7 @@ async function getSearchData() {
 
   if (error) throw new Error("Error while getting searchd data from DB")
   hideMainBodySpinner()
+  enableMainBody()
 
   renderUIOnSearch(data)
 }

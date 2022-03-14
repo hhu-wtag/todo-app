@@ -48,8 +48,6 @@ export async function handleIntialAddTask(event) {
     createdAt: created_at,
   })
 
-  showToast(id, true)
-
   //remove the intialCard that was added for data adding purpose
 
   cardsDOM.removeChild(cardsDOM.firstElementChild)
@@ -70,6 +68,7 @@ export async function handleIntialAddTask(event) {
   resetLimit()
 
   renderUI()
+  showToast(id, true)
 }
 
 export function handleInputField(e) {

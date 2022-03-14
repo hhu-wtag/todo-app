@@ -120,9 +120,10 @@ export async function handleDone() {
   )
 
   const pTitle = divCardHeader.querySelector("#title")
-  const createdAt = divCardHeader.querySelector("#createdAt").textContent
+  const pCreatedAt = divCardHeader.querySelector("#createdAt")
+  const createdAt = pCreatedAt.textContent
 
-  //pTitle.classList.remove("height_full")
+  pTitle.classList.remove("height_full")
 
   let days = completedInDays(createdAt)
   days = days / 8.64e7
@@ -140,6 +141,8 @@ export async function handleDone() {
     showToast(dataID, false)
     throw new Error("Error while updating done state")
   }
+
+  pCreatedAt.removeAttribute("hidden")
 
   //hideSpinner
   hideSpinner(dataID)

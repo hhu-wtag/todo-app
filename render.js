@@ -106,8 +106,6 @@ export async function renderUI() {
 }
 
 export async function renderUIOnSearch(data) {
-  disableFilterButtons()
-
   resetLimit()
 
   //remove everything from the list
@@ -134,7 +132,6 @@ export async function renderUIOnSearch(data) {
   }
 
   displayCards(data, range)
-  enableFilterButtons()
 }
 
 export async function renderUIOnLoadMore() {

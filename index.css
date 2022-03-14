@@ -355,7 +355,7 @@ li {
   }
 }
 
-svg:disabled,
+/* svg:disabled,
 svg[disabled] {
   pointer-events: none;
   opacity: 0.5;
@@ -364,11 +364,20 @@ svg[disabled] {
 button:disabled,
 button[disabled] {
   opacity: 0.5;
-}
+} */
 
 div:disabled,
-div[disabled] {
+div[disabled],
+button:disabled,
+button[disabled],
+svg:disabled,
+svg[disabled] {
   opacity: 0.5;
+  pointer-events: none;
+}
+
+.spinner {
+  opacity: 1;
 }
 
 .height_full {

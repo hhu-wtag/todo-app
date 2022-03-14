@@ -31,7 +31,7 @@ export function disableSearchButton() {
 export function enableSearchButton() {
   const btnSearch = document.querySelector("#searchIcon")
 
-  btnSearch.remove("disabled")
+  btnSearch.removeAttribute("disabled")
 }
 
 export function disableCreateButton() {
@@ -58,4 +58,16 @@ export function hideLoadMoreBtn() {
   const btnLoadMore = document.querySelector(".btnLoadMore")
 
   btnLoadMore.setAttribute("hidden", true)
+}
+
+export function disableMainBody() {
+  const divMainBody = document.querySelector(".main__body")
+
+  divMainBody.setAttribute("disabled", true)
+}
+
+export function enableMainBody() {
+  const divMainBody = document.querySelector(".main__body")
+
+  divMainBody.removeAttribute("disabled")
 }

@@ -37,7 +37,12 @@ export function handleIntialDeleteTask(event) {
 export async function handleDelete() {
   let dataID = this.getAttribute("data-id")
 
+  const divCard = document.querySelector(`div[data-id='${dataID}']`)
+
   showSpinner(dataID)
+
+  //disable the div
+  divCard.setAttribute("disabled", true)
 
   let { error, data } = await deleteDataByID(dataID)
 
@@ -47,6 +52,9 @@ export async function handleDelete() {
   }
 
   hideSpinner(dataID)
+
+  //enable the div
+  divCard.removeAttribute("disabled")
 
   //show toast for successful api call
 

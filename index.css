@@ -32,6 +32,36 @@ body {
   border-bottom: 1px solid #dde2ff;
 }
 
+.searchBar {
+  width: 420px;
+  border: none;
+  box-shadow: inset 0px 0px 0px 3px #d1d8ff;
+  -webkit-box-shadow: inset 0px 0px 0px 3px #d1d8ff;
+  -moz-box-shadow: inset 0px 0px 0px 3px #d1d8ff;
+  border-radius: 5px;
+  padding: 8px 0px 8px 12px;
+}
+
+li {
+  list-style: none;
+}
+
+.toast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 50px;
+  background: var(--text-success);
+  color: var(--bg-secondary);
+  font-size: 18px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.toast > span {
+  margin-right: 8px;
+}
+
 .headerLeft {
   display: flex;
   align-items: center;
@@ -85,6 +115,9 @@ body {
   resize: none;
   border: 3px solid #d1d8ff;
   border-radius: 5px;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  padding: 4px 0px 0px 8px;
 }
 
 #initial_button_div {
@@ -137,6 +170,16 @@ body {
 
 .noData {
   background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 130px;
+}
+
+.noData_text {
+  color: var(--text-primary);
+  font-size: 24px;
 }
 
 #cards {
@@ -148,6 +191,7 @@ body {
   max-width: 800px;
   width: 100%;
   max-width: 1920px;
+  word-wrap: break-word;
 }
 
 .card {
@@ -238,6 +282,14 @@ body {
   font-size: 16px;
 }
 
+.doneBtn {
+  display: flex;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 .toasts {
   position: fixed;
   left: 50%;
@@ -303,6 +355,12 @@ body {
   }
 }
 
+svg:disabled,
+svg[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 button:disabled,
 button[disabled] {
   opacity: 0.5;
@@ -316,3 +374,42 @@ div[disabled] {
 .height_full {
   height: 100%;
 }
+
+@media only screen and (max-width: 1366px) {
+  #cards {
+    display: flex;
+    flex-wrap: wrap;
+    --gap: 24px;
+    --columns: 3;
+    gap: var(--gap);
+    max-width: 800px;
+    width: 100%;
+    max-width: 1920px;
+  }
+}
+
+/* @media only screen and (max-width: 1920px) {
+  #cards {
+    display: flex;
+    flex-wrap: wrap;
+    --gap: 24px;
+    --columns: 5;
+    gap: var(--gap);
+    max-width: 800px;
+    width: 100%;
+    max-width: 1920px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #cards {
+    display: flex;
+    flex-wrap: wrap;
+    --gap: 24px;
+    --columns: 2;
+    gap: var(--gap);
+    max-width: 800px;
+    width: 100%;
+    max-width: 1920px;
+  }
+} */

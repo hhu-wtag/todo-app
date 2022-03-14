@@ -8,7 +8,6 @@ export async function getAllDataFromDB() {
     .from("Todo")
     .select()
     .order("created_at", { ascending: false })
-    .limit(limit)
 
   updateGlobalState({
     fetchedDataLength: data.length,

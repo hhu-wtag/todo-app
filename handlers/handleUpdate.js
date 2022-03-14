@@ -15,8 +15,6 @@ import { updateDone } from "../dbCalls.js"
 import { showToast } from "../toast.js"
 import { hideSpinner, showSpinner } from "../spinner.js"
 
-const cardsDOM = document.querySelector("#cards")
-
 async function handleSaveMiddleware(dataID) {
   const pTitle = document.querySelector(
     `div[data-id='${dataID}'] > p.cardTitle`
@@ -54,6 +52,8 @@ async function handleSaveMiddleware(dataID) {
 export async function handleSave() {
   let dataID = this.getAttribute("data-id")
 
+  const divCard = document.querySelector(`div[data-id='${dataID}']`)
+
   const pTitle = document.querySelector(
     `div[data-id='${dataID}'] > p.cardTitle`
   )
@@ -70,11 +70,14 @@ export async function handleSave() {
 
   let response
 
-  if (editData && editData.oldState === editData.newState) {
+  if (
+    editData &&
+    (editData.oldState === editData.newState || editData.newState === "")
+  ) {
     editStateChanged = false
 
     response = new Array({
-      title: pTitle.textContent,
+      title: editData.oldState,
     })
 
     console.log("No change in edit state")
@@ -85,11 +88,17 @@ export async function handleSave() {
     //start spinner
     showSpinner(dataID)
 
+    //disable the div
+    divCard.setAttribute("disabled", true)
+
     response = await handleSaveMiddleware(dataID)
 
     console.log("DB updated.")
     //start spinner
     hideSpinner(dataID)
+
+    //enable the div
+    divCard.removeAttribute("disabled")
   }
 
   let state = pTitle.getAttribute("contenteditable")
@@ -102,6 +111,8 @@ export async function handleSave() {
 
 export async function handleDone() {
   let dataID = this.getAttribute("data-id")
+
+  const divCard = document.querySelector(`div[data-id='${dataID}']`)
 
   //get the div with data ID
   const divCardHeader = document.querySelector(
@@ -119,6 +130,9 @@ export async function handleDone() {
   //showSpinner
   showSpinner(dataID)
 
+  //disable the div
+  divCard.setAttribute("disabled", true)
+
   //update DB
   const { data, error } = await updateDone(dataID, days)
 
@@ -132,6 +146,9 @@ export async function handleDone() {
 
   //show Toast
   showToast(dataID, true)
+
+  //enable the div
+  divCard.removeAttribute("disabled")
 
   //place a strike through class on the title and change color to green
   pTitle.classList.add("done")

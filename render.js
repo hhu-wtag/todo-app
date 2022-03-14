@@ -5,6 +5,8 @@ import {
   hideLoadMoreBtn,
   showLoadMoreBtn,
   enableCreateButton,
+  disableSearchButton,
+  enableSearchButton,
 } from "./buttonStates.js"
 import {
   getAllDataFromDB,
@@ -44,6 +46,7 @@ function displayCards(data, range) {
 
 export async function renderUI() {
   disableFilterButtons() // disable all three filter buttons
+  disableSearchButton()
   disableCreateButton() // disable create button
   hideLoadMoreBtn() // hideLoadMoreBtn()
   showMainBodySpinner() // show main loading spinner
@@ -60,6 +63,7 @@ export async function renderUI() {
   if (data.length === 0) {
     // no data to show.
     showNoDataIcon()
+    enableCreateButton()
     updateGlobalState({
       fetchedDataLength: 0,
     })
@@ -79,12 +83,14 @@ export async function renderUI() {
 
     let range
 
-    if (data.length >= limit) {
+    if (data.length === limit) {
+      hideLoadMoreBtn()
+      range = data.length
+    } else if (data.length > limit) {
       range = limit
       showLoadMoreBtn()
     } else {
       range = data.length
-      console.log("here")
 
       //all the data has been fetched
       //hide the load more button
@@ -94,6 +100,7 @@ export async function renderUI() {
 
     displayCards(data, range)
     enableFilterButtons()
+    enableSearchButton()
     enableCreateButton()
   }
 }

@@ -22,6 +22,18 @@ export function enableFilterButtons() {
   btnFilterCom.removeAttribute("disabled")
 }
 
+export function disableSearchButton() {
+  const btnSearch = document.querySelector("#searchIcon")
+
+  btnSearch.setAttribute("disabled", true)
+}
+
+export function enableSearchButton() {
+  const btnSearch = document.querySelector("#searchIcon")
+
+  btnSearch.remove("disabled")
+}
+
 export function disableCreateButton() {
   const btnCreate = document.querySelector("#createBtn")
 

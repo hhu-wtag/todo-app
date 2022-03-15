@@ -26,7 +26,7 @@ export function showToast(id, success) {
 
   divToasts.appendChild(liToast)
 
-  removeToast(id, 2000)
+  removeToast(id, 2500)
 }
 
 function removeToast(id, delay) {

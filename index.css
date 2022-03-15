@@ -438,14 +438,74 @@ button[disabled] {
 
 @media only screen and (max-width: 1366px) {
   #cards {
-    display: flex;
-    flex-wrap: wrap;
-    --gap: 24px;
     --columns: 3;
-    gap: var(--gap);
-    max-width: 800px;
-    width: 100%;
-    max-width: 1920px;
+  }
+
+  .nav {
+    padding: 15px 100px;
+  }
+  .container {
+    padding: 64px 100px 0px 100px;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  #cards {
+    --columns: 2;
+  }
+
+  .nav {
+    padding: 15px 70px;
+  }
+
+  .searchBar {
+    width: 280px;
+    /* margin-left: -160px; */
+  }
+
+  .container {
+    padding: 64px 70px 0px 70px;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  #cards {
+    --columns: 1;
+  }
+  .toasts {
+    left: 46%;
+  }
+
+  .toast {
+    padding: 12px 25px;
+    font-size: 16px;
+    width: max-content;
+  }
+
+  .btnsFilter > *:not(:last-child) {
+    margin-right: 12px;
+  }
+
+  .nav {
+    padding: 15px 20px;
+    min-height: 42px;
+  }
+
+  .searchBar {
+    width: auto;
+  }
+
+  .container {
+    padding: 44px 20px 0px 20px;
+  }
+
+  .btnsContainer {
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .btnsContainer > .btnsFilter {
+    margin: 34px 0px;
   }
 }
 

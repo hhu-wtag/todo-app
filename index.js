@@ -8,7 +8,6 @@ import {
 import { renderUI, renderUIOnLoadMore } from "./render.js"
 
 import { toogleSearchBar, handleSearch } from "./search.js"
-import { hideLoadMoreSpinner, showLoadMoreSpinner } from "./spinner.js"
 
 let splashScreenIsOn = true
 let domIsLoaded = false

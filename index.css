@@ -21,6 +21,7 @@ body {
   width: 100vw;
   font-family: "Roboto", sans-serif;
   background: var(--bg-primary);
+  overflow-x: hidden;
 }
 
 .nav {
@@ -282,15 +283,22 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 42px;
+  margin: 42px 0px;
 }
 
 .btnLoadMore {
+  display: flex;
+  align-items: center;
+  height: 40px;
   border: 1px solid #dde2ff;
   border-radius: 5px;
   padding: 8px 18px;
   color: var(--bg-secondary);
   background: var(--text-primary);
+}
+
+.spinner__loadmore {
+  margin-right: 5px;
 }
 
 .btn {

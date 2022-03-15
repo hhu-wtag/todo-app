@@ -79,8 +79,8 @@ export function resetGlobalState() {
     contentEditable: false,
     editModeOn: false,
     fetchingData: false,
-    limit: 10,
-    limitValue: 10,
+    limit: 12,
+    limitValue: 12,
   }
 
   state = JSON.stringify(state)

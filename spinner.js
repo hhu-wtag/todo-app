@@ -34,3 +34,15 @@ export function hideMainBodySpinner() {
   //TODO: when loading set different styles
   divSpinner.setAttribute("hidden", true)
 }
+
+export function showLoadMoreSpinner() {
+  const spanLoadMore = document.querySelector(".loadMoreSpinner")
+
+  spanLoadMore.removeAttribute("hidden")
+}
+
+export function hideLoadMoreSpinner() {
+  const spanLoadMore = document.querySelector(".loadMoreSpinner")
+
+  spanLoadMore.setAttribute("hidden", true)
+}

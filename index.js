@@ -8,6 +8,7 @@ import {
 import { renderUI, renderUIOnLoadMore } from "./render.js"
 
 import { toogleSearchBar, handleSearch } from "./search.js"
+import { hideLoadMoreSpinner, showLoadMoreSpinner } from "./spinner.js"
 
 let splashScreenIsOn = true
 let domIsLoaded = false
@@ -71,12 +72,14 @@ function initialLoad() {
 
   btnLoadMore.addEventListener("click", function () {
     let { limitValue, limit } = getGlobalState()
+    //showLoadMoreSpinner()
 
     updateGlobalState({
       limit: limit + limitValue,
     })
 
     renderUIOnLoadMore()
+    //hideLoadMoreSpinner()
   })
 
   createBtnDOM.addEventListener("click", (e) => {

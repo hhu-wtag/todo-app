@@ -20,7 +20,12 @@ import {
   resetLimit,
   updateGlobalState,
 } from "./Helpers/globalState.js"
-import { hideMainBodySpinner, showMainBodySpinner } from "./spinner.js"
+import {
+  hideLoadMoreSpinner,
+  hideMainBodySpinner,
+  showLoadMoreSpinner,
+  showMainBodySpinner,
+} from "./spinner.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -136,12 +141,13 @@ export async function renderUIOnSearch(data) {
 
 export async function renderUIOnLoadMore() {
   let { searchText, limit } = getGlobalState()
+  showLoadMoreSpinner()
 
-  showMainBodySpinner()
+  //showMainBodySpinner()
   let { data, error } = await getDataOnLoadMore(searchText)
 
   if (error) throw new Error("Error while getting data on load more event")
-  hideMainBodySpinner()
+  //hideMainBodySpinner()
 
   let range
 
@@ -161,6 +167,7 @@ export async function renderUIOnLoadMore() {
   }
 
   displayCards(data, range)
+  hideLoadMoreSpinner()
 }
 
 export async function renderUIOnFilter(mode) {

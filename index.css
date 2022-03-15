@@ -126,9 +126,15 @@ li {
   resize: none;
   border: 3px solid #d1d8ff;
   border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
   font-size: 16px;
   font-family: "Roboto", sans-serif;
   padding: 4px 0px 0px 8px;
+}
+
+.initialInputForm {
+  height: 100%;
 }
 
 #initial_button_div {

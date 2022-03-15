@@ -27,11 +27,18 @@ export async function handleEdit() {
   toogleContentEditable(pTitle, state, dataID)
 }
 
+function handleEditBox(e) {
+  if (e.keyCode === 13) {
+    handleSave.call(this)
+  }
+}
+
 export function toogleContentEditable(el, contentEditableIsOn, dataID) {
   var sel = window.getSelection()
 
   if (contentEditableIsOn === "true") {
     el.setAttribute("contenteditable", "true")
+    el.addEventListener("keypress", handleEditBox)
     el.classList.add("height_full")
     const range = document.createRange()
 

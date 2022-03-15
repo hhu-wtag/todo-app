@@ -17,7 +17,7 @@ import { showToast } from "../toast.js"
 
 const cardsDOM = document.querySelector("#cards")
 
-export async function handleIntialAddTask(event) {
+export async function handleIntialAddTask() {
   console.log("Initial Add Task Button Pressed !")
   disableFilterButtons() // disable create button
   disableCreateButton() // disable all three filter buttons
@@ -31,7 +31,7 @@ export async function handleIntialAddTask(event) {
   if (sanitizedTitle === "") return
 
   //add state to db
-  let { error, data } = await insertDataToDB({
+  let { data, error } = await insertDataToDB({
     title: sanitizedTitle,
   })
 
@@ -77,4 +77,13 @@ export function handleInputField(e) {
   updateGlobalState({
     title: value,
   })
+
+  if (value && value[value.length - 1] === "\n") {
+    console.log("Enter pressed")
+    handleIntialAddTask()
+  }
+}
+
+export function handleInitialInputForm(e) {
+  e.preventDefault()
 }

@@ -1,6 +1,7 @@
 import {
   handleInputField,
   handleIntialAddTask,
+  handleInitialInputForm,
 } from "./handlers/handleInput.js"
 
 import { handleEdit } from "./handlers/handleEdit.js"
@@ -36,6 +37,7 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   cardFooter.classList.add("cardFooter")
 
   const pTitle = document.createElement("p")
+  pTitle.setAttribute("data-id", itemId)
   pTitle.id = "title"
   pTitle.classList.add("cardTitle")
   pTitle.textContent = title
@@ -113,17 +115,22 @@ export function createInitialCard() {
   const card = document.createElement("div")
   card.classList.add("card")
 
+  const form = document.createElement("form")
+  form.addEventListener("submit", handleInitialInputForm)
+  form.classList.add("initialInputForm")
+
   const inputField = document.createElement("textarea")
   inputField.id = "initial_input_box"
   inputField.rows = 5
   inputField.cols = 10
 
-  inputField.addEventListener("change", handleInputField)
+  inputField.addEventListener("input", handleInputField)
 
   const buttonsDiv = document.createElement("div")
   buttonsDiv.id = "initial_button_div"
 
   const addTaskBtn = document.createElement("button")
+  addTaskBtn.type = "submit"
   addTaskBtn.classList.add("btn")
   addTaskBtn.innerText = "Add Task"
   addTaskBtn.id = "addTaskBtn"
@@ -138,8 +145,10 @@ export function createInitialCard() {
   buttonsDiv.appendChild(addTaskBtn)
   buttonsDiv.appendChild(deleteTaskBtn)
 
-  card.appendChild(inputField)
-  card.appendChild(buttonsDiv)
+  form.appendChild(inputField)
+  form.appendChild(buttonsDiv)
+
+  card.appendChild(form)
 
   return card
 }

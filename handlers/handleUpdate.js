@@ -35,6 +35,7 @@ async function handleSaveMiddleware(dataID) {
   if (error) {
     showToast(dataID, false) // show failed toast
 
+    hideSpinner(dataID)
     throw new Error("Error while updating data")
   }
 
@@ -128,6 +129,8 @@ export async function handleDone() {
   let days = completedInDays(createdAt)
   days = days / 8.64e7
 
+  days = parseInt(days)
+
   //showSpinner
   showSpinner(dataID)
 
@@ -139,6 +142,7 @@ export async function handleDone() {
 
   if (error) {
     showToast(dataID, false)
+    hideSpinner(dataID)
     throw new Error("Error while updating done state")
   }
 

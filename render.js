@@ -46,7 +46,7 @@ function displayCards(data, range) {
 
 export async function renderUI() {
   disableFilterButtons() // disable all three filter buttons
-  disableSearchButton()
+  disableSearchButton() // disable search button initially
   disableCreateButton() // disable create button
   hideLoadMoreBtn() // hideLoadMoreBtn()
   showMainBodySpinner() // show main loading spinner

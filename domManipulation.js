@@ -70,9 +70,7 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   if (doneIn === 0) {
     completedInTag.textContent = "Completed in less than a day"
   } else {
-    completedInTag.textContent = `Completed in ${parseInt(
-      doneIn / 86400000
-    )} days`
+    completedInTag.textContent = `Completed in ${parseInt(doneIn)} days`
   }
 
   completedInTag.id = "completedInTag"

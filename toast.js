@@ -10,7 +10,14 @@ export function showToast(id, success) {
 </svg>
   `
   liToast.id = id
-  liToast.classList.add("toast")
+  liToast.classList.add("toast", "animateToast")
+
+  if (success) {
+    liToast.classList.add("toast__success")
+  } else {
+    liToast.classList.add("toast__danger")
+  }
+
   liToast.textContent = success
     ? "Changes are saved successfully"
     : "We couldn't save your changes"

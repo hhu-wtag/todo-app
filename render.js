@@ -14,7 +14,12 @@ import {
   getDataOnLoadMore,
   getFilterdData,
 } from "./dbCalls.js"
-import { createCard, showNoDataIcon } from "./domManipulation.js"
+import {
+  createCard,
+  hideNoSearchDataIcon,
+  showNoDataIcon,
+  showNoSearchDataIcon,
+} from "./domManipulation.js"
 import {
   getGlobalState,
   resetLimit,
@@ -112,6 +117,7 @@ export async function renderUI() {
 
 export async function renderUIOnSearch(data) {
   resetLimit()
+  hideNoSearchDataIcon()
 
   //remove everything from the list
   while (cardsDOM.firstChild) {
@@ -134,6 +140,11 @@ export async function renderUIOnSearch(data) {
     //hide the load more button
 
     hideLoadMoreBtn()
+  }
+
+  if (data.length <= 0) {
+    //show no search result found UI
+    showNoSearchDataIcon()
   }
 
   displayCards(data, range)

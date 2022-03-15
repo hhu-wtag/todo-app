@@ -472,6 +472,15 @@ button[disabled] {
   #cards {
     --columns: 1;
   }
+
+  .btnsFilter > * {
+    font-size: 14px;
+  }
+
+  .cardTitle {
+    font-size: 18px;
+  }
+
   .toasts {
     left: 46%;
   }

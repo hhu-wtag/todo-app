@@ -28,6 +28,10 @@ export function toogleSearchBar(inputSearchBar) {
   } else {
     //show Search bar
 
+    const input = document.getElementById("searchBar")
+
+    // input.focus()
+    // input.select()
     //check if we are in mobile view. If we are then remove the logo
 
     if (window.screen.width <= 680) {
@@ -76,6 +80,7 @@ async function getSearchData() {
 
   updateGlobalState({
     searchText,
+    createCardIsOpened: false,
   })
 
   // if (searchText === "") {

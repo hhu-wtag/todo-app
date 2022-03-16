@@ -112,6 +112,7 @@ export async function renderUI() {
 
 export async function renderUIOnSearch(data) {
   resetLimit()
+  enableFilterButtons()
 
   //remove everything from the list
   while (cardsDOM.firstChild) {
@@ -134,6 +135,10 @@ export async function renderUIOnSearch(data) {
     //hide the load more button
 
     hideLoadMoreBtn()
+  }
+
+  if (data.length <= 0) {
+    disableFilterButtons()
   }
 
   displayCards(data, range)

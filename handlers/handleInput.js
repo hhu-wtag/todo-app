@@ -12,6 +12,7 @@ import {
   disableCreateButton,
   disableFilterButtons,
   enableCreateButton,
+  enableFilterButtons,
 } from "../buttonStates.js"
 import { showToast } from "../toast.js"
 
@@ -28,7 +29,11 @@ export async function handleIntialAddTask() {
 
   let sanitizedTitle = sanitizer(title)
 
-  if (sanitizedTitle === "") return
+  if (sanitizedTitle === "") {
+    enableFilterButtons()
+    enableCreateButton()
+    return
+  }
 
   //add state to db
   let { data, error } = await insertDataToDB({

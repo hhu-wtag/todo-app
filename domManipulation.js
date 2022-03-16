@@ -150,6 +150,15 @@ export function createInitialCard() {
 
   card.appendChild(form)
 
+  //focus on input field
+
+  // let sel = window.getSelection()
+
+  // sel.removeAllRanges()
+
+  inputField.focus()
+  inputField.selectionEnd = 0
+
   return card
 }
 

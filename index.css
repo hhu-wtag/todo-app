@@ -24,6 +24,11 @@ body {
   overflow-x: hidden;
 }
 
+.splash__title > h1 {
+  color: var(--bg-alternative);
+  font-size: 96px;
+}
+
 .nav {
   display: flex;
   padding: 15px 150px 15px 150px;
@@ -494,6 +499,11 @@ button[disabled] {
 @media only screen and (max-width: 680px) {
   #cards {
     --columns: 1;
+  }
+
+  .splash__title > h1 {
+    color: var(--bg-alternative);
+    font-size: 60px;
   }
 
   #cards > :not(:nth-child(n)) {

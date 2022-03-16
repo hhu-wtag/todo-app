@@ -4,7 +4,9 @@ export default function sanitizer(input) {
 
   const newLineRegEx = /(\r|\n)/g
 
-  let withTagsRemoved = input.replaceAll(firstRegEx, "")
+  let trimmed = input.trim()
+
+  let withTagsRemoved = trimmed.replaceAll(firstRegEx, "")
   withTagsRemoved = withTagsRemoved.replaceAll(secondRegEx, "")
 
   withTagsRemoved = withTagsRemoved.replaceAll(newLineRegEx, "")

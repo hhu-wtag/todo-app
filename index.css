@@ -547,4 +547,8 @@ button[disabled] {
   .btnsContainer > .btnsFilter {
     margin: 29px 0px;
   }
+
+  .noSearchData_text {
+    font-size: 18px;
+  }
 }

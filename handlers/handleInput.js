@@ -15,6 +15,7 @@ import {
   enableFilterButtons,
 } from "../buttonStates.js"
 import { showToast } from "../toast.js"
+import { handleIntialDeleteTask } from "./handleDelete.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -29,9 +30,15 @@ export async function handleIntialAddTask() {
 
   let sanitizedTitle = sanitizer(title)
 
+  console.log({
+    sanitizedTitle,
+  })
+
   if (sanitizedTitle === "") {
     enableFilterButtons()
     enableCreateButton()
+    handleIntialDeleteTask()
+    showToast(Date.now(), false)
     return
   }
 

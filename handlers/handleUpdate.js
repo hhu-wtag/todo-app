@@ -71,6 +71,8 @@ export async function handleSave() {
 
   let response
 
+  editData.newState = sanitizer(editData.newState)
+
   if (
     editData &&
     (editData.oldState === editData.newState || editData.newState === "")

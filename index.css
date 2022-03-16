@@ -180,6 +180,7 @@ li {
   border: 1px solid #dde2ff;
   border-radius: 5px;
   padding: 8px 18px;
+  margin: 5px 0px;
 }
 
 .btnsFilter > *:not(:last-child) {
@@ -505,32 +506,6 @@ button[disabled] {
   }
 
   .btnsContainer > .btnsFilter {
-    margin: 34px 0px;
+    margin: 29px 0px;
   }
 }
-
-/* @media only screen and (max-width: 1920px) {
-  #cards {
-    display: flex;
-    flex-wrap: wrap;
-    --gap: 24px;
-    --columns: 5;
-    gap: var(--gap);
-    max-width: 800px;
-    width: 100%;
-    max-width: 1920px;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  #cards {
-    display: flex;
-    flex-wrap: wrap;
-    --gap: 24px;
-    --columns: 2;
-    gap: var(--gap);
-    max-width: 800px;
-    width: 100%;
-    max-width: 1920px;
-  }
-} */

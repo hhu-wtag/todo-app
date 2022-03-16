@@ -208,27 +208,36 @@ li {
   flex-wrap: wrap;
   --gap: 24px;
   --columns: 4;
-  gap: var(--gap);
-  max-width: 800px;
+  /* gap: var(--gap); */
   width: 100%;
   max-width: 1920px;
   word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+#cards > :not(:nth-child(4n)) {
+  margin-right: var(--gap);
+}
+
+#cards > * {
+  margin-bottom: var(--gap);
 }
 
 .card {
   position: relative;
-
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   background: var(--bg-secondary);
   color: var(--text-primary);
   border: 1px solid #dde2ff;
-  box-sizing: border-box;
   border-radius: 5px;
 
   width: calc(
     (100% / var(--columns)) - var(--gap) + (var(--gap) / var(--columns))
   );
+
+  /* width: calc((100% / var(--columns)) - ((var(--columns) - 1) * var(--gap))); */
 
   padding: 15px 15px 15px 15px;
 }
@@ -431,6 +440,15 @@ button[disabled] {
 @media only screen and (max-width: 1366px) {
   #cards {
     --columns: 3;
+    --gap: 24px;
+  }
+
+  #cards > :not(:nth-child(3n)) {
+    margin-right: var(--gap);
+  }
+
+  #cards > :nth-child(3n) {
+    margin-right: 0px;
   }
 
   .nav {
@@ -439,11 +457,24 @@ button[disabled] {
   .container {
     padding: 64px 100px 0px 100px;
   }
+
+  .cardTitle {
+    font-size: 18px;
+  }
 }
 
 @media only screen and (max-width: 1080px) {
   #cards {
     --columns: 2;
+    --gap: 24px;
+  }
+
+  #cards > :not(:nth-child(2n)) {
+    margin-right: var(--gap);
+  }
+
+  #cards > :nth-child(2n) {
+    margin-right: 0px;
   }
 
   .nav {
@@ -463,6 +494,14 @@ button[disabled] {
 @media only screen and (max-width: 680px) {
   #cards {
     --columns: 1;
+  }
+
+  #cards > :not(:nth-child(n)) {
+    margin-right: var(--gap);
+  }
+
+  #cards > :nth-child(n) {
+    margin-right: 0px;
   }
 
   .btnsFilter > * {

@@ -390,17 +390,6 @@ li {
   }
 }
 
-/* svg:disabled,
-svg[disabled] {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-button:disabled,
-button[disabled] {
-  opacity: 0.5;
-} */
-
 svg:disabled,
 svg[disabled] {
   opacity: 0.5;

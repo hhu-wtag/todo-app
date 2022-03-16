@@ -30,8 +30,12 @@ export function toogleSearchBar(inputSearchBar) {
 
     const input = document.getElementById("searchBar")
 
-    // input.focus()
-    // input.select()
+    // you have to make the stack empty before you can focus. Odd chrome bug
+    setTimeout(() => {
+      input.focus()
+      input.select()
+    }, 0)
+
     //check if we are in mobile view. If we are then remove the logo
 
     if (window.screen.width <= 680) {

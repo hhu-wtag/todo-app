@@ -152,12 +152,10 @@ export function createInitialCard() {
 
   //focus on input field
 
-  // let sel = window.getSelection()
-
-  // sel.removeAllRanges()
-
-  inputField.focus()
-  inputField.selectionEnd = 0
+  setTimeout(() => {
+    inputField.focus()
+    inputField.select()
+  }, 0)
 
   return card
 }

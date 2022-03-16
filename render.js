@@ -156,6 +156,10 @@ export async function renderUIOnLoadMore() {
   let { searchText, limit } = getGlobalState()
   showLoadMoreSpinner()
 
+  updateGlobalState({
+    createCardIsOpened: false,
+  })
+
   //showMainBodySpinner()
   let { data, error } = await getDataOnLoadMore(searchText)
 

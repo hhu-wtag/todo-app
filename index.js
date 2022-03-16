@@ -1,4 +1,4 @@
-import { hideLoadMoreBtn } from "./buttonStates.js"
+import { hideLoadMoreBtn, showLoadMoreBtn } from "./buttonStates.js"
 import {
   createInitialCard,
   hideNoDataIcon,
@@ -90,13 +90,20 @@ function initialLoad() {
     let { createCardIsOpened } = getGlobalState()
     let card = null
 
-    let { fetchedDataLength } = getGlobalState()
+    let { fetchedDataLength, limit } = getGlobalState()
 
     if (createCardIsOpened === false) {
       updateGlobalState({ createCardIsOpened: true })
 
-      hideLoadMoreBtn()
-      hideNoSearchDataIcon()
+      if (fetchedDataLength === 0) {
+        hideNoSearchDataIcon()
+      }
+
+      if (fetchedDataLength < limit) {
+        hideLoadMoreBtn()
+      } else {
+        showLoadMoreBtn()
+      }
 
       card = createInitialCard()
 

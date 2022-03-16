@@ -186,7 +186,8 @@ li {
   margin-right: 18px;
 }
 
-.noData {
+.noData,
+.noSearchData {
   background: var(--bg-primary);
   display: flex;
   flex-direction: column;
@@ -195,7 +196,8 @@ li {
   margin-top: 130px;
 }
 
-.noData_text {
+.noData_text,
+.noSearchData_text {
   color: var(--text-primary);
   font-size: 24px;
 }

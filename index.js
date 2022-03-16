@@ -1,4 +1,9 @@
-import { createInitialCard, hideNoDataIcon } from "./domManipulation.js"
+import { hideLoadMoreBtn } from "./buttonStates.js"
+import {
+  createInitialCard,
+  hideNoDataIcon,
+  hideNoSearchDataIcon,
+} from "./domManipulation.js"
 import { handleFilterAll, handleFilterCom, handleFilterInc } from "./filter.js"
 import {
   updateGlobalState,
@@ -85,10 +90,13 @@ function initialLoad() {
     let { createCardIsOpened } = getGlobalState()
     let card = null
 
+    let { fetchedDataLength } = getGlobalState()
+
     if (createCardIsOpened === false) {
       updateGlobalState({ createCardIsOpened: true })
 
-      hideNoDataIcon()
+      hideLoadMoreBtn()
+      hideNoSearchDataIcon()
 
       card = createInitialCard()
 

@@ -2,7 +2,11 @@ import { resetLimit, updateGlobalState } from "../Helpers/globalState.js"
 
 import sanitizer from "../Helpers/santizer.js"
 
-import { createCard, hideNoDataIcon } from "../domManipulation.js"
+import {
+  createCard,
+  hideNoDataIcon,
+  hideNoSearchDataIcon,
+} from "../domManipulation.js"
 
 import { getGlobalState } from "../Helpers/globalState.js"
 

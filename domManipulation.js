@@ -186,9 +186,6 @@ export function showNoSearchDataIcon() {
   const divNoSearchData = document.querySelector(".noSearchData")
 
   divNoSearchData.removeAttribute("hidden")
-
-  disableFilterButtons()
-  hideLoadMoreBtn()
 }
 
 export function hideNoSearchDataIcon() {
@@ -197,7 +194,4 @@ export function hideNoSearchDataIcon() {
   if (divNoSearchData.getAttribute("hidden") === null) {
     divNoSearchData.setAttribute("hidden", true)
   }
-
-  enableFilterButtons()
-  showLoadMoreBtn()
 }

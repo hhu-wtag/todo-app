@@ -121,5 +121,11 @@ export async function searchDB(searchText) {
     .select()
     .ilike("title", `%${searchText}%`)
 
+  if (data) {
+    updateGlobalState({
+      fetchedDataLength: data.length,
+    })
+  }
+
   return { data, error }
 }

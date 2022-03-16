@@ -10,7 +10,7 @@ import {
   insertDataToDB,
   updateDataByID,
 } from "../dbCalls.js"
-import { showNoDataIcon } from "../domManipulation.js"
+import { showNoDataIcon, showNoSearchDataIcon } from "../domManipulation.js"
 import { showToast } from "../toast.js"
 import { hideSpinner, showSpinner } from "../spinner.js"
 
@@ -19,11 +19,15 @@ const cardsDOM = document.querySelector("#cards")
 export function handleIntialDeleteTask() {
   console.log("Initial Delete Task Button Pressed !")
 
-  let { fetchedDataLength } = getGlobalState()
+  let { fetchedDataLength, searchText } = getGlobalState()
 
   //hide no data
   if (fetchedDataLength === 0) {
-    showNoDataIcon()
+    if (searchText === "") {
+      showNoDataIcon()
+    } else {
+      showNoSearchDataIcon()
+    }
   }
 
   cardsDOM.removeChild(cardsDOM.firstElementChild)

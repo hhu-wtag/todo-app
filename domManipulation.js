@@ -15,7 +15,12 @@ import {
 
 import { doneIcon, editIcon, deleteIcon, loaderIcon } from "./Helpers/icons.js"
 import { convertTime } from "./Helpers/time.js"
-import { disableFilterButtons, hideLoadMoreBtn } from "./buttonStates.js"
+import {
+  disableFilterButtons,
+  enableFilterButtons,
+  hideLoadMoreBtn,
+  showLoadMoreBtn,
+} from "./buttonStates.js"
 
 export function createCard({ itemId, title, createdAt, done, doneIn }) {
   const card = document.createElement("div")
@@ -175,4 +180,24 @@ export function hideNoDataIcon() {
   if (divNoData.getAttribute("hidden") === null) {
     divNoData.setAttribute("hidden", true)
   }
+}
+
+export function showNoSearchDataIcon() {
+  const divNoSearchData = document.querySelector(".noSearchData")
+
+  divNoSearchData.removeAttribute("hidden")
+
+  disableFilterButtons()
+  hideLoadMoreBtn()
+}
+
+export function hideNoSearchDataIcon() {
+  const divNoSearchData = document.querySelector(".noSearchData")
+
+  if (divNoSearchData.getAttribute("hidden") === null) {
+    divNoSearchData.setAttribute("hidden", true)
+  }
+
+  enableFilterButtons()
+  showLoadMoreBtn()
 }

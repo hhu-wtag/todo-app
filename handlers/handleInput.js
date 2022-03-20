@@ -2,11 +2,7 @@ import { resetLimit, updateGlobalState } from "../Helpers/globalState.js"
 
 import sanitizer from "../Helpers/santizer.js"
 
-import {
-  createCard,
-  hideNoDataIcon,
-  hideNoSearchDataIcon,
-} from "../domManipulation.js"
+import { createCard } from "../domManipulation.js"
 
 import { getGlobalState } from "../Helpers/globalState.js"
 
@@ -24,7 +20,6 @@ import { handleIntialDeleteTask } from "./handleDelete.js"
 const cardsDOM = document.querySelector("#cards")
 
 export async function handleIntialAddTask() {
-  console.log("Initial Add Task Button Pressed !")
   disableFilterButtons() // disable create button
   disableCreateButton() // disable all three filter buttons
 
@@ -33,10 +28,6 @@ export async function handleIntialAddTask() {
   //sanitize title
 
   let sanitizedTitle = sanitizer(title)
-
-  console.log({
-    sanitizedTitle,
-  })
 
   if (sanitizedTitle === "") {
     enableFilterButtons()
@@ -68,9 +59,6 @@ export async function handleIntialAddTask() {
 
   cardsDOM.removeChild(cardsDOM.firstElementChild)
 
-  //append the newly created card
-  //cardsDOM.prepend(card)
-
   //clear the search bar on new data add
   const inputSearchBar = document.querySelector(".searchBar")
 
@@ -95,7 +83,6 @@ export function handleInputField(e) {
   })
 
   if (value && value[value.length - 1] === "\n") {
-    console.log("Enter pressed")
     handleIntialAddTask()
   }
 }

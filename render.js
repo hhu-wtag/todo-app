@@ -37,8 +37,6 @@ const cardsDOM = document.querySelector("#cards")
 function displayCards(data, range) {
   let card = null
 
-  console.log({ len: data.length })
-
   for (let index = 0; index < range; index++) {
     let item = data[index]
 

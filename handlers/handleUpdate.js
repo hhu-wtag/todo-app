@@ -82,12 +82,9 @@ export async function handleSave() {
     response = new Array({
       title: editData.oldState,
     })
-
-    console.log("No change in edit state")
   }
   //update data in db if edit state changed
   if (editStateChanged) {
-    console.log("change detected. Updating DB...")
     //start spinner
     showSpinner(dataID)
 
@@ -96,7 +93,6 @@ export async function handleSave() {
 
     response = await handleSaveMiddleware(dataID)
 
-    console.log("DB updated.")
     //start spinner
     hideSpinner(dataID)
 

@@ -19,13 +19,9 @@ export function updateEditDataById(id, state) {
 
     localStorage.setItem(id, JSON.stringify(editData))
   } else {
-    let currentState = localStorage.getItem(id)
+    let currentState = JSON.parse(localStorage.getItem(id))
 
-    currentState = JSON.parse(currentState)
-
-    let newState = {}
-
-    newState = {
+    let newState = {
       ...currentState,
       ...state,
     }
@@ -48,7 +44,6 @@ export function getGlobalState() {
   let globalState = null
 
   if (localStorage.getItem("state") === null) {
-    console.log("here")
     globalState = {
       createCardIsOpened: false,
       limit: 10,
@@ -70,7 +65,7 @@ export function removeEditDataById(id) {
 }
 
 export function resetGlobalState() {
-  let state = {
+  let state = JSON.stringify({
     createCardIsOpened: false,
     title: "",
     searchText: "",
@@ -79,9 +74,7 @@ export function resetGlobalState() {
     fetchingData: false,
     limit: 12,
     limitValue: 12,
-  }
-
-  state = JSON.stringify(state)
+  })
 
   localStorage.setItem("state", state)
 }

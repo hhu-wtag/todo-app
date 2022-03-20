@@ -1,7 +1,5 @@
 export function updateGlobalState(state) {
-  let oldState = localStorage.getItem("state")
-
-  oldState = JSON.parse(oldState)
+  let oldState = JSON.parse(localStorage.getItem("state"))
 
   let newState = {
     ...oldState,

@@ -1,12 +1,12 @@
 export default function sanitizer(input) {
-  const firstRegEx = /(<[a-z]+>)/g
-  const secondRegEx = /<\/[a-z]+>/g
-  const newLineRegEx = /(\r|\n)/g
+  const openingHTMLTagRegex = /(<[a-z]+>)/g
+  const closingHTMLTagRegex = /<\/[a-z]+>/g
+  const newLineRegex = /(\r|\n)/g
 
-  let withTagsRemoved = input.trim().replaceAll(firstRegEx, "")
+  let withTagsRemoved = input.trim().replaceAll(openingHTMLTagRegex, "")
 
-  withTagsRemoved = withTagsRemoved.replaceAll(secondRegEx, "")
-  withTagsRemoved = withTagsRemoved.replaceAll(newLineRegEx, "")
+  withTagsRemoved = withTagsRemoved.replaceAll(closingHTMLTagRegex, "")
+  withTagsRemoved = withTagsRemoved.replaceAll(newLineRegex, "")
 
   return withTagsRemoved
 }

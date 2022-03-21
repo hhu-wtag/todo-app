@@ -159,7 +159,7 @@ export async function renderUIOnLoadMore() {
   })
 
   //showMainBodySpinner()
-  let { data, error } = await getDataOnLoadMore(searchText)
+  let { filteredData: data, error } = await getDataOnLoadMore(searchText)
 
   if (error) throw new Error("Error while getting data on load more event")
   //hideMainBodySpinner()
@@ -168,6 +168,7 @@ export async function renderUIOnLoadMore() {
 
   if (data.length >= limit) {
     range = limit
+    showLoadMoreBtn()
   } else {
     range = data.length
 
@@ -193,7 +194,7 @@ export async function renderUIOnFilter(mode) {
 
   let data = null
 
-  let { searchText } = getGlobalState()
+  let { searchText, limit } = getGlobalState()
 
   if (mode === "inc") {
     //show only the incomplete data
@@ -226,6 +227,16 @@ export async function renderUIOnFilter(mode) {
     cardsDOM.removeChild(cardsDOM.firstChild)
   }
 
-  displayCards(data, data.length)
+  let range = 0
+
+  if (data.length > limit) {
+    range = limit
+    showLoadMoreBtn()
+  } else {
+    hideLoadMoreBtn()
+    range = data.length
+  }
+
+  displayCards(data, range)
   enableFilterButtons()
 }

@@ -50,6 +50,7 @@ export function getGlobalState() {
       limitValue: 10,
       searchText: "",
       title: "",
+      activeFilter: "all",
     }
     localStorage.setItem("state", JSON.stringify(globalState))
   } else {
@@ -74,6 +75,7 @@ export function resetGlobalState() {
     fetchingData: false,
     limit: 12,
     limitValue: 12,
+    activeFilter: "all",
   })
 
   localStorage.setItem("state", state)

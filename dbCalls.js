@@ -2,8 +2,6 @@ import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 import supabase from "./supabase.js"
 
 export async function getAllDataFromDB() {
-  let { limit } = getGlobalState()
-
   const { data, error } = await supabase
     .from("Todo")
     .select()
@@ -20,18 +18,28 @@ export async function getAllDataFromDB() {
 }
 
 export async function getDataOnLoadMore(searchText) {
+  let { activeFilter } = getGlobalState()
+
   const { data, error } = await supabase
     .from("Todo")
     .select()
     .ilike("title", `%${searchText}%`)
     .order("created_at", { ascending: false })
 
+  let filteredData = []
+
+  if (activeFilter === "inc") {
+    filteredData = data.filter((item) => !item.done)
+  } else if (activeFilter === "com") {
+    filteredData = data.filter((item) => item.done)
+  } else filteredData = data
+
   updateGlobalState({
-    fetchedDataLength: data.length,
+    fetchedDataLength: filteredData.length,
   })
 
   return {
-    data,
+    filteredData,
     error,
   }
 }

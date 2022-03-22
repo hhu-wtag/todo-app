@@ -1,4 +1,4 @@
-export function updateGlobalState(state) {
+export const updateGlobalState = (state) => {
   let oldState = JSON.parse(localStorage.getItem("state"))
 
   let newState = {
@@ -9,7 +9,7 @@ export function updateGlobalState(state) {
   localStorage.setItem("state", JSON.stringify(newState))
 }
 
-export function updateEditDataById(id, state) {
+export const updateEditDataById = (id, state) => {
   let editData = {}
 
   if (localStorage.getItem(id) === null) {
@@ -30,7 +30,7 @@ export function updateEditDataById(id, state) {
   }
 }
 
-export function getEditDataById(id) {
+export const getEditDataById = (id) => {
   let data = localStorage.getItem(id)
 
   if (data) {
@@ -40,7 +40,7 @@ export function getEditDataById(id) {
   }
 }
 
-export function getGlobalState() {
+export const getGlobalState = () => {
   let globalState = null
 
   if (localStorage.getItem("state") === null) {
@@ -59,13 +59,13 @@ export function getGlobalState() {
   return JSON.parse(globalState)
 }
 
-export function removeEditDataById(id) {
+export const removeEditDataById = (id) => {
   if (localStorage.getItem(id) === null) return
 
   localStorage.removeItem(id)
 }
 
-export function resetGlobalState() {
+export const resetGlobalState = () => {
   let state = JSON.stringify({
     createCardIsOpened: false,
     title: "",
@@ -81,7 +81,7 @@ export function resetGlobalState() {
   localStorage.setItem("state", state)
 }
 
-export function resetLimit() {
+export const resetLimit = () => {
   let { limit, limitValue } = getGlobalState()
 
   //reset limit

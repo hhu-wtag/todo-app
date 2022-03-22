@@ -13,7 +13,7 @@ import {
   handleIntialDeleteTask,
 } from "./handlers/handleDelete.js"
 
-import { doneIcon, editIcon, deleteIcon, loaderIcon } from "./Helpers/icons.js"
+import IconMapper from "./Helpers/icons.js"
 import { convertTime } from "./Helpers/time.js"
 import { disableFilterButtons, hideLoadMoreBtn } from "./buttonStates.js"
 
@@ -25,7 +25,7 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   const spinner = document.createElement("div")
   spinner.classList.add("spinner__container")
   card.setAttribute("data-id", itemId)
-  spinner.innerHTML = loaderIcon()
+  spinner.innerHTML = IconMapper["loader"]
   spinner.setAttribute("hidden", true)
 
   const cardHeader = document.createElement("div")
@@ -36,35 +36,37 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   cardFooter.setAttribute("data-id", itemId)
   cardFooter.classList.add("cardFooter")
 
-  const pTitle = document.createElement("p")
-  pTitle.setAttribute("data-id", itemId)
-  pTitle.id = "title"
-  pTitle.classList.add("cardTitle")
-  pTitle.textContent = title
-  pTitle.setAttribute("contenteditable", false)
+  const cardParagraphTitle = document.createElement("p")
+  cardParagraphTitle.setAttribute("data-id", itemId)
+  cardParagraphTitle.id = "title"
+  cardParagraphTitle.classList.add("cardTitle")
+  cardParagraphTitle.textContent = title
+  cardParagraphTitle.setAttribute("contenteditable", false)
 
-  const pCreatedAt = document.createElement("p")
-  pCreatedAt.id = "createdAt"
-  pCreatedAt.classList.add("cardCreatedAt")
-  pCreatedAt.textContent = `Created At: ${convertTime(String(createdAt))}`
+  const cardParagraphCreatedAt = document.createElement("p")
+  cardParagraphCreatedAt.id = "createdAt"
+  cardParagraphCreatedAt.classList.add("cardCreatedAt")
+  cardParagraphCreatedAt.textContent = `Created At: ${convertTime(
+    String(createdAt)
+  )}`
 
-  const doneBtn = document.createElement("span")
-  doneBtn.innerHTML = doneIcon()
-  doneBtn.classList.add("btn", "doneBtn")
-  doneBtn.setAttribute("data-id", itemId)
-  doneBtn.addEventListener("click", handleDone)
+  const doneButton = document.createElement("span")
+  doneButton.innerHTML = IconMapper["done"]
+  doneButton.classList.add("btn", "doneBtn")
+  doneButton.setAttribute("data-id", itemId)
+  doneButton.addEventListener("click", handleDone)
 
-  const editBtn = document.createElement("span")
-  editBtn.innerHTML = editIcon()
-  editBtn.classList.add("btn", "editBtn")
-  editBtn.setAttribute("data-id", itemId)
-  editBtn.addEventListener("click", handleEdit)
+  const editButton = document.createElement("span")
+  editButton.innerHTML = IconMapper["edit"]
+  editButton.classList.add("btn", "editBtn")
+  editButton.setAttribute("data-id", itemId)
+  editButton.addEventListener("click", handleEdit)
 
-  const deleteBtn = document.createElement("span")
-  deleteBtn.innerHTML = deleteIcon()
-  deleteBtn.classList.add("btn", "deleteBtn")
-  deleteBtn.setAttribute("data-id", itemId)
-  deleteBtn.addEventListener("click", handleDelete)
+  const deleteButton = document.createElement("span")
+  deleteButton.innerHTML = IconMapper["delete"]
+  deleteButton.classList.add("btn", "deleteBtn")
+  deleteButton.setAttribute("data-id", itemId)
+  deleteButton.addEventListener("click", handleDelete)
 
   const completedInTag = document.createElement("p")
   completedInTag.setAttribute("hidden", true)
@@ -85,24 +87,24 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   cardFooterRight.id = "cardFooterRight"
 
   if (done) {
-    pTitle.classList.add("done")
-    doneBtn.setAttribute("hidden", "true")
-    editBtn.setAttribute("hidden", "true")
+    cardParagraphTitle.classList.add("done")
+    doneButton.setAttribute("hidden", "true")
+    editButton.setAttribute("hidden", "true")
 
     completedInTag.removeAttribute("hidden")
   }
 
-  cardFooterLeft.appendChild(doneBtn)
-  cardFooterLeft.appendChild(editBtn)
-  cardFooterLeft.appendChild(deleteBtn)
+  cardFooterLeft.appendChild(doneButton)
+  cardFooterLeft.appendChild(editButton)
+  cardFooterLeft.appendChild(deleteButton)
 
   cardFooterRight.appendChild(completedInTag)
 
   cardFooter.appendChild(cardFooterLeft)
   cardFooter.appendChild(cardFooterRight)
 
-  cardHeader.appendChild(pTitle)
-  cardHeader.appendChild(pCreatedAt)
+  cardHeader.appendChild(cardParagraphTitle)
+  cardHeader.appendChild(cardParagraphCreatedAt)
 
   card.appendChild(spinner)
   card.appendChild(cardHeader)
@@ -138,7 +140,7 @@ export function createInitialCard() {
 
   const deleteTaskBtn = document.createElement("span")
   deleteTaskBtn.id = "deleteTaskBtn"
-  deleteTaskBtn.innerHTML = deleteIcon()
+  deleteTaskBtn.innerHTML = IconMapper["delete"]
   deleteTaskBtn.classList.add("btn")
   deleteTaskBtn.addEventListener("click", handleIntialDeleteTask)
 

@@ -17,8 +17,6 @@ import { hideSpinner, showSpinner } from "../spinner.js"
 const cardsDOM = document.querySelector("#cards")
 
 export function handleIntialDeleteTask() {
-  console.log("Initial Delete Task Button Pressed !")
-
   let { fetchedDataLength, searchText } = getGlobalState()
 
   //hide no data

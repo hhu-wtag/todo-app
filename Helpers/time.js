@@ -11,14 +11,12 @@ export function completedInDays(createdAt) {
     .reverse()
     .join("-")
 
-  let todoFinishTime = new Date().toISOString().replace(/T.*/, "")
-
   todoAddTime = `20${todoAddTime}`
 
-  let date1 = new Date(todoAddTime)
-  let date2 = new Date(todoFinishTime)
+  const todoFinishTime = new Date().toISOString().replace(/T.*/, "")
 
-  let days = date2 - date1
+  const date1 = new Date(todoAddTime)
+  const date2 = new Date(todoFinishTime)
 
-  return days
+  return date2 - date1
 }

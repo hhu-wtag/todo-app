@@ -1,7 +1,7 @@
 import { getGlobalState, updateGlobalState } from "./Helpers/globalState.js"
 import supabase from "./supabase.js"
 
-export async function getAllDataFromDB() {
+export const getAllDataFromDB = async () => {
   const { data, error } = await supabase
     .from("Todo")
     .select()
@@ -17,7 +17,7 @@ export async function getAllDataFromDB() {
   }
 }
 
-export async function getDataOnLoadMore(searchText) {
+export const getDataOnLoadMore = async (searchText) => {
   let { activeFilter } = getGlobalState()
 
   const { data, error } = await supabase
@@ -44,7 +44,7 @@ export async function getDataOnLoadMore(searchText) {
   }
 }
 
-export async function getFilterdData(done, searchText) {
+export const getFilterdData = async (done, searchText) => {
   const { data, error } = await supabase
     .from("Todo")
     .select()
@@ -62,7 +62,7 @@ export async function getFilterdData(done, searchText) {
   }
 }
 
-export async function getAllFilterdData(searchText) {
+export const getAllFilterdData = async (searchText) => {
   const { data, error } = await supabase
     .from("Todo")
     .select()
@@ -75,7 +75,7 @@ export async function getAllFilterdData(searchText) {
   }
 }
 
-export async function insertDataToDB(state) {
+export const insertDataToDB = async (state) => {
   const { title } = state
 
   const { data, error } = await supabase.from("Todo").insert([
@@ -90,7 +90,7 @@ export async function insertDataToDB(state) {
   }
 }
 
-export async function deleteDataByID(id) {
+export const deleteDataByID = async (id) => {
   const { data, error } = await supabase.from("Todo").delete().match({ id })
 
   return {
@@ -99,7 +99,7 @@ export async function deleteDataByID(id) {
   }
 }
 
-export async function updateDataByID(id, state) {
+export const updateDataByID = async (id, state) => {
   const { data, error } = await supabase
     .from("Todo")
     .update({ title: state })
@@ -111,7 +111,7 @@ export async function updateDataByID(id, state) {
   }
 }
 
-export async function updateDone(id, doneIn) {
+export const updateDone = async (id, doneIn) => {
   const { data, error } = await supabase
     .from("Todo")
     .update({ done: true, doneIn })
@@ -123,7 +123,7 @@ export async function updateDone(id, doneIn) {
   }
 }
 
-export async function searchDB(searchText) {
+export const searchDB = async (searchText) => {
   const { data, error } = await supabase
     .from("Todo")
     .select()

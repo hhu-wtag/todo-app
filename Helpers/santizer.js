@@ -1,4 +1,4 @@
-export default function sanitizer(input) {
+const sanitizer = (input) => {
   const openingHTMLTagRegex = /(<[a-z]+>)/g
   const closingHTMLTagRegex = /<\/[a-z]+>/g
   const newLineRegex = /(\r|\n)/g
@@ -10,3 +10,5 @@ export default function sanitizer(input) {
 
   return withTagsRemoved
 }
+
+export default sanitizer

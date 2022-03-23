@@ -148,6 +148,9 @@ export async function renderUIOnSearch(data) {
 
   if (data.length <= 0) {
     disableFilterButtons()
+
+    //hide if an already existing emptyCard UI state is open
+    hideNoDataIcon()
     //show no search result found UI
     showNoSearchDataIcon()
   }

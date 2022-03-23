@@ -54,10 +54,6 @@ function initialLoad() {
   const divSplashScreen = document.querySelector(".splashScreen")
   const divMainScreen = document.querySelector(".mainScreen")
 
-  //
-
-  //
-
   divSplashScreen.style.display = "none"
   divMainScreen.removeAttribute("hidden")
   ;(function mounted() {

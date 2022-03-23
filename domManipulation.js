@@ -16,6 +16,7 @@ import {
 import IconMapper from "./Helpers/icons.js"
 import { convertTime } from "./Helpers/time.js"
 import { disableFilterButtons, hideLoadMoreBtn } from "./buttonStates.js"
+import { hideTooltip, showTooltip } from "./tooltip.js"
 
 export function createCard({ itemId, title, createdAt, done, doneIn }) {
   const card = document.createElement("div")
@@ -51,22 +52,31 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
   )}`
 
   const doneButton = document.createElement("span")
-  doneButton.innerHTML = IconMapper["done"]
+  const doneIconSvg = document.createElement("svg")
+  doneIconSvg.innerHTML = IconMapper["done"]
   doneButton.classList.add("btn", "doneBtn")
   doneButton.setAttribute("data-id", itemId)
   doneButton.addEventListener("click", handleDone)
+  doneButton.addEventListener("mouseenter", showTooltip)
+  doneButton.addEventListener("mouseleave", hideTooltip)
 
   const editButton = document.createElement("span")
-  editButton.innerHTML = IconMapper["edit"]
+  const editIconSvg = document.createElement("svg")
+  editIconSvg.innerHTML = IconMapper["edit"]
   editButton.classList.add("btn", "editBtn")
   editButton.setAttribute("data-id", itemId)
   editButton.addEventListener("click", handleEdit)
+  editButton.addEventListener("mouseenter", showTooltip)
+  editButton.addEventListener("mouseleave", hideTooltip)
 
   const deleteButton = document.createElement("span")
-  deleteButton.innerHTML = IconMapper["delete"]
+  const deleteIconSvg = document.createElement("svg")
+  deleteIconSvg.innerHTML = IconMapper["delete"]
   deleteButton.classList.add("btn", "deleteBtn")
   deleteButton.setAttribute("data-id", itemId)
   deleteButton.addEventListener("click", handleDelete)
+  deleteButton.addEventListener("mouseenter", showTooltip)
+  deleteButton.addEventListener("mouseleave", hideTooltip)
 
   const completedInTag = document.createElement("p")
   completedInTag.setAttribute("hidden", true)
@@ -93,6 +103,15 @@ export function createCard({ itemId, title, createdAt, done, doneIn }) {
 
     completedInTag.removeAttribute("hidden")
   }
+
+  doneButton.appendChild(doneIconSvg)
+  doneButton.appendChild(createTooltip(itemId, "Done"))
+
+  editButton.appendChild(editIconSvg)
+  editButton.appendChild(createTooltip(itemId, "Edit"))
+
+  deleteButton.appendChild(deleteIconSvg)
+  deleteButton.appendChild(createTooltip(itemId, "Delete"))
 
   cardFooterLeft.appendChild(doneButton)
   cardFooterLeft.appendChild(editButton)
@@ -139,10 +158,16 @@ export function createInitialCard() {
   addTaskBtn.addEventListener("click", handleIntialAddTask)
 
   const deleteTaskBtn = document.createElement("span")
+  const deleteIconSvg = document.createElement("svg")
+  deleteIconSvg.innerHTML = IconMapper["delete"]
+  deleteTaskBtn.classList.add("btn", "deleteBtn")
   deleteTaskBtn.id = "deleteTaskBtn"
-  deleteTaskBtn.innerHTML = IconMapper["delete"]
-  deleteTaskBtn.classList.add("btn")
   deleteTaskBtn.addEventListener("click", handleIntialDeleteTask)
+  deleteTaskBtn.addEventListener("mouseenter", showTooltip)
+  deleteTaskBtn.addEventListener("mouseleave", hideTooltip)
+
+  deleteTaskBtn.appendChild(deleteIconSvg)
+  deleteTaskBtn.appendChild(createTooltip("initial_tooltip_delete", "Delete"))
 
   buttonsDiv.appendChild(addTaskBtn)
   buttonsDiv.appendChild(deleteTaskBtn)
@@ -196,4 +221,13 @@ export function hideNoSearchDataIcon() {
   if (divNoSearchData.getAttribute("hidden") === null) {
     divNoSearchData.setAttribute("hidden", true)
   }
+}
+
+function createTooltip(id, text) {
+  const paragraph = document.createElement("p")
+  paragraph.id = id
+  paragraph.classList.add("tooltip", "hideTooltip")
+  paragraph.textContent = text
+
+  return paragraph
 }

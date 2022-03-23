@@ -16,6 +16,7 @@ import {
 } from "./dbCalls.js"
 import {
   createCard,
+  hideNoDataIcon,
   hideNoSearchDataIcon,
   showNoDataIcon,
   showNoSearchDataIcon,
@@ -66,11 +67,15 @@ export async function renderUI() {
     throw new Error("Error while fetching data from supabase")
   }
 
+  updateGlobalState({
+    fetchedDataLength: data.length,
+  })
+
   hideMainBodySpinner() // hide main loading spinner
 
   if (data.length === 0) {
     // no data to show.
-    showNoDataIcon()
+    showNoDataIcon("You didn't add any task. Please add one!")
     enableCreateButton()
     updateGlobalState({
       fetchedDataLength: 0,
@@ -194,7 +199,7 @@ export async function renderUIOnFilter(mode) {
 
   let data = null
 
-  let { searchText, limit } = getGlobalState()
+  let { searchText, limit, activeFilter } = getGlobalState()
 
   if (mode === "inc") {
     //show only the incomplete data
@@ -222,6 +227,10 @@ export async function renderUIOnFilter(mode) {
     data = response.data
   }
 
+  updateGlobalState({
+    fetchedDataLength: data.length,
+  })
+
   //remove everything from the list
   while (cardsDOM.firstChild) {
     cardsDOM.removeChild(cardsDOM.firstChild)
@@ -237,6 +246,19 @@ export async function renderUIOnFilter(mode) {
     range = data.length
   }
 
-  displayCards(data, range)
+  if (data.length > 0) {
+    hideNoDataIcon()
+    hideNoSearchDataIcon()
+    displayCards(data, range)
+  } else {
+    let filter = ""
+
+    if (activeFilter === "all") filter = "all"
+    else if (activeFilter === "com") filter = "completed"
+    else filter = "incompleted"
+
+    showNoDataIcon(`No ${filter} Data`)
+  }
+
   enableFilterButtons()
 }

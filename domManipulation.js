@@ -162,8 +162,13 @@ export function createInitialCard() {
   return card
 }
 
-export function showNoDataIcon() {
+export function showNoDataIcon(message = undefined) {
   const divNoData = document.querySelector(".noData")
+  const paragraphNoData = divNoData.querySelector("p")
+
+  if (message !== undefined) {
+    paragraphNoData.textContent = message
+  }
 
   divNoData.removeAttribute("hidden")
 

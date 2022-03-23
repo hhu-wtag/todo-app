@@ -8,6 +8,7 @@ import { deleteDataByID } from "../dbCalls.js"
 import { showNoDataIcon, showNoSearchDataIcon } from "../domManipulation.js"
 import { showToast } from "../toast.js"
 import { hideSpinner, showSpinner } from "../spinner.js"
+import { renderUI } from "../render.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -65,7 +66,7 @@ export async function handleDelete() {
 
   //check if this was the last item in the list.
   //if it is, show no data icon.
-  let { fetchedDataLength, limit } = getGlobalState()
+  let { fetchedDataLength } = getGlobalState()
 
   fetchedDataLength = fetchedDataLength - 1
 
@@ -74,6 +75,6 @@ export async function handleDelete() {
   })
 
   if (fetchedDataLength <= 0) {
-    showNoDataIcon()
+    renderUI()
   }
 }

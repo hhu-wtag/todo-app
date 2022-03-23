@@ -9,8 +9,10 @@ import { getGlobalState } from "../Helpers/globalState.js"
 import { insertDataToDB } from "../dbCalls.js"
 import { renderUI } from "../render.js"
 import {
+  disableAddTaskButton,
   disableCreateButton,
   disableFilterButtons,
+  enableAddTaskButton,
   enableCreateButton,
   enableFilterButtons,
 } from "../buttonStates.js"
@@ -22,6 +24,7 @@ const cardsDOM = document.querySelector("#cards")
 export async function handleIntialAddTask() {
   disableFilterButtons() // disable create button
   disableCreateButton() // disable all three filter buttons
+  disableAddTaskButton()
 
   let { title } = getGlobalState()
 
@@ -72,6 +75,7 @@ export async function handleIntialAddTask() {
   resetLimit()
 
   renderUI()
+  enableAddTaskButton()
   showToast(id, true)
 }
 

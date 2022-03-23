@@ -71,3 +71,15 @@ export function enableMainBody() {
 
   divMainBody.removeAttribute("disabled")
 }
+
+export function disableAddTaskButton() {
+  const buttonAddTask = document.querySelector("#addTaskBtn")
+
+  buttonAddTask.setAttribute("disabled", true)
+}
+
+export function enableAddTaskButton() {
+  const buttonAddTask = document.querySelector("#addTaskBtn")
+
+  buttonAddTask.removeAttribute("disabled")
+}

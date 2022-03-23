@@ -97,6 +97,7 @@ function initialLoad() {
 
       if (fetchedDataLength === 0) {
         hideNoSearchDataIcon()
+        hideNoDataIcon()
       }
 
       if (fetchedDataLength < limit) {

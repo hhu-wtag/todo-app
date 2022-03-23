@@ -82,7 +82,7 @@ function toogleEditModeUI(dataID) {
 
     const btnSave = document.createElement("button")
     btnSave.classList.add("btnSave")
-    btnSave.textContent = "save"
+    btnSave.textContent = "Save"
     btnSave.addEventListener("click", handleSave)
     btnSave.setAttribute("data-id", dataID)
 

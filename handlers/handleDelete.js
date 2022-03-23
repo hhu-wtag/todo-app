@@ -4,12 +4,7 @@ import {
   getGlobalState,
 } from "../Helpers/globalState.js"
 
-import {
-  deleteDataByID,
-  updateDone,
-  insertDataToDB,
-  updateDataByID,
-} from "../dbCalls.js"
+import { deleteDataByID } from "../dbCalls.js"
 import { showNoDataIcon, showNoSearchDataIcon } from "../domManipulation.js"
 import { showToast } from "../toast.js"
 import { hideSpinner, showSpinner } from "../spinner.js"

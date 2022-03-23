@@ -287,6 +287,8 @@ li {
   position: absolute;
   top: 35px;
   left: -8px;
+  width: 35px;
+  text-align: center;
   background: #32394b;
   color: white;
   transition: opacity 100ms ease-in-out;

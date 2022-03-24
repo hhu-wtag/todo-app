@@ -29,6 +29,7 @@ export async function handleEdit() {
 
 function handleEditBox(e) {
   if (e.keyCode === 13) {
+    this.removeEventListener("keypress", handleEditBox)
     handleSave.call(this)
   }
 }

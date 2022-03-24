@@ -79,6 +79,9 @@ export function handleInputField(e) {
   })
 
   if (value && value[value.length - 1] === "\n") {
+    const textAreaInitialInputBox = document.querySelector("#initial_input_box")
+
+    textAreaInitialInputBox.setAttribute("disabled", true)
     handleIntialAddTask()
   }
 }

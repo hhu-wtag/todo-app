@@ -9,7 +9,12 @@ import { showNoDataIcon, showNoSearchDataIcon } from "../domManipulation.js"
 import { showToast } from "../toast.js"
 import { hideSpinner, showSpinner } from "../spinner.js"
 import { renderUI } from "../render.js"
-import { enableFilterButtons } from "../buttonStates.js"
+import {
+  disableFilterButtons,
+  enableFilterButtons,
+  hideLoadMoreBtn,
+  hideShowLessBtn,
+} from "../buttonStates.js"
 
 const cardsDOM = document.querySelector("#cards")
 
@@ -23,6 +28,8 @@ export function handleIntialDeleteTask() {
       showNoSearchDataIcon()
     }
 
+    disableFilterButtons()
+  } else {
     enableFilterButtons()
   }
 
@@ -68,13 +75,19 @@ export async function handleDelete() {
 
   //check if this was the last item in the list.
   //if it is, show no data icon.
-  let { fetchedDataLength } = getGlobalState()
+  let { fetchedDataLength, limitValue } = getGlobalState()
 
   fetchedDataLength = fetchedDataLength - 1
 
   updateGlobalState({
     fetchedDataLength: fetchedDataLength,
   })
+
+  if (fetchedDataLength === limitValue) {
+    hideShowLessBtn()
+    hideLoadMoreBtn()
+    renderUI()
+  }
 
   if (fetchedDataLength <= 0) {
     renderUI()

@@ -7,6 +7,8 @@ import {
   enableCreateButton,
   disableSearchButton,
   enableSearchButton,
+  hideShowLessBtn,
+  showShowLessBtn,
 } from "./buttonStates.js"
 import {
   getAllDataFromDB,
@@ -59,6 +61,9 @@ export async function renderUI() {
   disableCreateButton() // disable create button
   hideLoadMoreBtn() // hideLoadMoreBtn()
   showMainBodySpinner() // show main loading spinner
+  hideShowLessBtn() // hideShowLess button initially
+
+  resetLimit()
 
   // get fresh batch of data from db
   let { error, data } = await getAllDataFromDB()
@@ -69,6 +74,7 @@ export async function renderUI() {
 
   updateGlobalState({
     fetchedDataLength: data.length,
+    createCardIsOpened: false,
   })
 
   hideMainBodySpinner() // hide main loading spinner
@@ -128,13 +134,17 @@ export async function renderUIOnSearch(data) {
     cardsDOM.removeChild(cardsDOM.firstChild)
   }
 
-  let { limit } = getGlobalState()
+  let { limit, limitValue } = getGlobalState()
 
   limit = parseInt(limit)
 
   let range
 
-  if (data.length >= limit) {
+  if (data.length === limitValue) {
+    hideLoadMoreBtn()
+    hideShowLessBtn()
+    range = limitValue
+  } else if (data.length >= limit) {
     range = limit
     showLoadMoreBtn()
   } else {
@@ -182,8 +192,10 @@ export async function renderUIOnLoadMore() {
 
     //all the data has been fetched
     //hide the load more button
-
     hideLoadMoreBtn()
+
+    //show showLess button (no pun intended :p)
+    showShowLessBtn()
   }
 
   while (cardsDOM.firstChild) {
@@ -202,7 +214,7 @@ export async function renderUIOnFilter(mode) {
 
   let data = null
 
-  let { searchText, limit, activeFilter } = getGlobalState()
+  let { searchText, limit, activeFilter, limitValue } = getGlobalState()
 
   if (mode === "inc") {
     //show only the incomplete data
@@ -241,7 +253,11 @@ export async function renderUIOnFilter(mode) {
 
   let range = 0
 
-  if (data.length > limit) {
+  if (data.length === limitValue) {
+    hideLoadMoreBtn()
+    hideShowLessBtn()
+    range = limitValue
+  } else if (data.length > limit) {
     range = limit
     showLoadMoreBtn()
   } else {

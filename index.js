@@ -1,4 +1,8 @@
-import { hideLoadMoreBtn, showLoadMoreBtn } from "./buttonStates.js"
+import {
+  hideLoadMoreBtn,
+  hideShowLessBtn,
+  showLoadMoreBtn,
+} from "./buttonStates.js"
 import {
   createInitialCard,
   hideNoDataIcon,
@@ -50,6 +54,7 @@ function initialLoad() {
   const btnFilterCom = document.querySelector(".btnFilterCom")
 
   const btnLoadMore = document.querySelector(".btnLoadMore")
+  const btnShowLess = document.querySelector(".btnShowLess")
 
   const divSplashScreen = document.querySelector(".splashScreen")
   const divMainScreen = document.querySelector(".mainScreen")
@@ -82,11 +87,15 @@ function initialLoad() {
     //hideLoadMoreSpinner()
   })
 
+  btnShowLess.addEventListener("click", function () {
+    renderUI()
+  })
+
   createBtnDOM.addEventListener("click", (e) => {
     let { createCardIsOpened } = getGlobalState()
     let card = null
 
-    let { fetchedDataLength, limit } = getGlobalState()
+    let { fetchedDataLength, limit, limitValue } = getGlobalState()
 
     if (createCardIsOpened === false) {
       updateGlobalState({ createCardIsOpened: true })
@@ -96,7 +105,10 @@ function initialLoad() {
         hideNoDataIcon()
       }
 
-      if (fetchedDataLength < limit) {
+      if (fetchedDataLength === limitValue) {
+        hideLoadMoreBtn()
+        hideShowLessBtn()
+      } else if (fetchedDataLength < limit) {
         hideLoadMoreBtn()
       } else {
         showLoadMoreBtn()

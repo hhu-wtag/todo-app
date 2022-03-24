@@ -128,6 +128,7 @@ export const searchDB = async (searchText) => {
     .from("Todo")
     .select()
     .ilike("title", `%${searchText}%`)
+    .order("created_at", { ascending: false })
 
   if (data) {
     updateGlobalState({

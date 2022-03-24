@@ -60,6 +60,20 @@ export function hideLoadMoreBtn() {
   btnLoadMore.setAttribute("hidden", true)
 }
 
+export function showShowLessBtn() {
+  const btnShowLess = document.querySelector(".btnShowLess")
+
+  if (btnShowLess.getAttribute("hidden")) {
+    btnShowLess.removeAttribute("hidden")
+  }
+}
+
+export function hideShowLessBtn() {
+  const btnShowLess = document.querySelector(".btnShowLess")
+
+  btnShowLess.setAttribute("hidden", true)
+}
+
 export function disableMainBody() {
   const divMainBody = document.querySelector(".main__body")
 

@@ -416,7 +416,7 @@ li {
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  top: calc(50% - 100px);
+  top: 50%;
   z-index: 999;
   will-change: transform;
 }

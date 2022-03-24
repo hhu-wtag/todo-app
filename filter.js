@@ -1,4 +1,8 @@
-import { activeFilterButtonUI } from "./buttonStates.js"
+import {
+  activeFilterButtonUI,
+  disableMainBody,
+  enableMainBody,
+} from "./buttonStates.js"
 import { updateGlobalState } from "./Helpers/globalState.js"
 import { renderUIOnFilter } from "./render.js"
 

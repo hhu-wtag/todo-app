@@ -9,6 +9,8 @@ import {
   enableSearchButton,
   hideShowLessBtn,
   showShowLessBtn,
+  disableMainBody,
+  enableMainBody,
 } from "./buttonStates.js"
 import {
   getAllDataFromDB,
@@ -207,6 +209,7 @@ export async function renderUIOnLoadMore() {
 }
 
 export async function renderUIOnFilter(mode) {
+  disableMainBody()
   disableFilterButtons()
   showMainBodySpinner()
   //reset limit
@@ -245,6 +248,8 @@ export async function renderUIOnFilter(mode) {
   updateGlobalState({
     fetchedDataLength: data.length,
   })
+
+  enableMainBody()
 
   //remove everything from the list
   while (cardsDOM.firstChild) {

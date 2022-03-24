@@ -260,7 +260,7 @@ export async function renderUIOnFilter(mode) {
     else if (activeFilter === "com") filter = "completed"
     else filter = "incompleted"
 
-    showNoDataIcon(`No ${filter} Data`)
+    showNoDataIcon(`No ${filter} task.`)
   }
 
   enableFilterButtons()

@@ -9,19 +9,21 @@ import { showNoDataIcon, showNoSearchDataIcon } from "../domManipulation.js"
 import { showToast } from "../toast.js"
 import { hideSpinner, showSpinner } from "../spinner.js"
 import { renderUI } from "../render.js"
+import { enableFilterButtons } from "../buttonStates.js"
 
 const cardsDOM = document.querySelector("#cards")
 
 export function handleIntialDeleteTask() {
   let { fetchedDataLength, searchText } = getGlobalState()
 
-  //hide no data
   if (fetchedDataLength === 0) {
     if (searchText === "") {
       showNoDataIcon()
     } else {
       showNoSearchDataIcon()
     }
+
+    enableFilterButtons()
   }
 
   cardsDOM.removeChild(cardsDOM.firstElementChild)

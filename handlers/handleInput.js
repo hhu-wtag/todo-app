@@ -24,7 +24,7 @@ const cardsDOM = document.querySelector("#cards")
 export async function handleIntialAddTask() {
   disableFilterButtons() // disable create button
   disableCreateButton() // disable all three filter buttons
-  disableAddTaskButton()
+  disableAddTaskButton() // disable add task button to prevent spamming
 
   let { title } = getGlobalState()
 
@@ -49,14 +49,7 @@ export async function handleIntialAddTask() {
     throw new Error("Error while inserting data in DB")
   }
 
-  let { created_at, id, title: titleFromDB } = data[0]
-
-  //create a card to append it to the cardsDOM
-  let card = createCard({
-    itemId: id,
-    title: titleFromDB,
-    createdAt: created_at,
-  })
+  let { id } = data[0]
 
   //remove the intialCard that was added for data adding purpose
 
@@ -75,7 +68,6 @@ export async function handleIntialAddTask() {
   resetLimit()
 
   renderUI()
-  enableAddTaskButton()
   showToast(id, true)
 }
 

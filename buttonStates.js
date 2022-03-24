@@ -79,7 +79,10 @@ export function disableAddTaskButton() {
 }
 
 export function enableAddTaskButton() {
-  const buttonAddTask = document.querySelector("#addTaskBtn")
+  const buttonAddTask = document.getElementById("addTaskBtn")
 
-  buttonAddTask.removeAttribute("disabled")
+  console.log(buttonAddTask)
+
+  if (buttonAddTask.getAttribute("disabled"))
+    buttonAddTask.removeAttribute("disabled")
 }

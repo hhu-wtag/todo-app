@@ -198,6 +198,10 @@ li {
   margin: 5px 0px;
 }
 
+.filterActive {
+  color: var(--bg-alternative);
+}
+
 .btnsFilter > *:not(:last-child) {
   margin-right: 18px;
 }

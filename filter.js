@@ -1,29 +1,36 @@
+import { activeFilterButtonUI } from "./buttonStates.js"
 import { updateGlobalState } from "./Helpers/globalState.js"
-import { renderUI, renderUIOnFilter } from "./render.js"
+import { renderUIOnFilter } from "./render.js"
 
-export function handleFilterAll() {
+export const handleFilterAll = () => {
   updateGlobalState({
     createCardIsOpened: false,
     activeFilter: "all",
   })
 
+  activeFilterButtonUI("all")
+
   renderUIOnFilter("all")
 }
 
-export function handleFilterInc() {
+export const handleFilterInc = () => {
   updateGlobalState({
     createCardIsOpened: false,
     activeFilter: "inc",
   })
 
+  activeFilterButtonUI("inc")
+
   renderUIOnFilter("inc")
 }
 
-export function handleFilterCom() {
+export const handleFilterCom = () => {
   updateGlobalState({
     createCardIsOpened: false,
     activeFilter: "com",
   })
+
+  activeFilterButtonUI("com")
 
   renderUIOnFilter("com")
 }

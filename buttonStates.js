@@ -100,3 +100,21 @@ export function enableAddTaskButton() {
   if (buttonAddTask.getAttribute("disabled"))
     buttonAddTask.removeAttribute("disabled")
 }
+
+export function activeFilterButtonUI(state) {
+  const btnFilterAll = document.querySelector(".btnFilterAll")
+  const btnFilterInc = document.querySelector(".btnFilterInc")
+  const btnFilterCom = document.querySelector(".btnFilterCom")
+
+  btnFilterAll.classList.remove("filterActive")
+  btnFilterInc.classList.remove("filterActive")
+  btnFilterCom.classList.remove("filterActive")
+
+  if (state === "all") {
+    btnFilterAll.classList.add("filterActive")
+  } else if (state === "com") {
+    btnFilterCom.classList.add("filterActive")
+  } else {
+    btnFilterInc.classList.add("filterActive")
+  }
+}

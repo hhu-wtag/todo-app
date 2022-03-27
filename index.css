@@ -171,9 +171,12 @@ li {
 }
 
 .createBtn {
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 18px;
+  padding: 8px 20px;
+  width: fit-content;
+  height: 30px;
   background: var(--bg-alternative);
   border: none;
   border-radius: 5px;
@@ -183,8 +186,30 @@ li {
 }
 
 .createBtn > span {
-  display: inline-flex;
-  margin-right: 5px;
+  transition: all 250ms ease-in-out;
+  opacity: 0;
+  position: absolute;
+  left: 12px;
+  transform: translateY(3px);
+}
+
+.createBtn > label {
+  transition: transform 200ms ease-in-out;
+  cursor: pointer;
+  transform: translateX(0px);
+}
+
+.createBtn:hover > label {
+  transition: transform 200ms ease-in-out;
+  cursor: pointer;
+  transform: translateX(10px);
+}
+
+.createBtn:hover > span {
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  opacity: 1;
+  transform: translateY(0px);
 }
 
 .btnsFilter > * {

@@ -1,14 +1,11 @@
 import {
-  disableCreateButton,
-  disableFilterButtons,
+  activeFilterButtonUI,
   disableMainBody,
-  enableCreateButton,
-  enableFilterButtons,
   enableMainBody,
 } from "./buttonStates.js"
 import { searchDB } from "./dbCalls.js"
 import { updateGlobalState } from "./Helpers/globalState.js"
-import { renderUI, renderUIOnSearch } from "./render.js"
+import { renderUIOnSearch } from "./render.js"
 import { hideMainBodySpinner, showMainBodySpinner } from "./spinner.js"
 
 export function toogleSearchBar(inputSearchBar) {
@@ -82,15 +79,17 @@ function debounce(func, delay = 250) {
 async function getSearchData() {
   let searchText = this.value
 
+  if (searchText === "") {
+    activeFilterButtonUI("all")
+    updateGlobalState({
+      activeFilter: "all",
+    })
+  }
+
   updateGlobalState({
     searchText,
     createCardIsOpened: false,
   })
-
-  // if (searchText === "") {
-  //   renderUI()
-  //   return
-  // }
 
   let { data, error } = await searchDB(searchText)
 

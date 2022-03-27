@@ -11,6 +11,7 @@ import {
   showShowLessBtn,
   disableMainBody,
   enableMainBody,
+  activeFilterButtonUI,
 } from "./buttonStates.js"
 import {
   getAllDataFromDB,
@@ -64,6 +65,7 @@ export async function renderUI() {
   hideLoadMoreBtn() // hideLoadMoreBtn()
   showMainBodySpinner() // show main loading spinner
   hideShowLessBtn() // hideShowLess button initially
+  activeFilterButtonUI("all") // set filter to active
 
   resetLimit()
 
@@ -77,6 +79,7 @@ export async function renderUI() {
   updateGlobalState({
     fetchedDataLength: data.length,
     createCardIsOpened: false,
+    activeFilter: "all",
   })
 
   hideMainBodySpinner() // hide main loading spinner
@@ -209,6 +212,11 @@ export async function renderUIOnLoadMore() {
 }
 
 export async function renderUIOnFilter(mode) {
+  //hide both load more and show less button initially
+
+  hideShowLessBtn()
+  hideLoadMoreBtn()
+
   disableMainBody()
   disableFilterButtons()
   showMainBodySpinner()
@@ -258,15 +266,20 @@ export async function renderUIOnFilter(mode) {
 
   let range = 0
 
-  if (data.length === limitValue) {
+  if (data.length <= limitValue) {
+    if (data.length === limitValue) {
+      range = limitValue
+    } else {
+      range = data.length
+    }
     hideLoadMoreBtn()
     hideShowLessBtn()
-    range = limitValue
   } else if (data.length > limit) {
     range = limit
     showLoadMoreBtn()
-  } else {
+  } else if (data.length <= limit) {
     hideLoadMoreBtn()
+    showShowLessBtn()
     range = data.length
   }
 
